@@ -18,6 +18,7 @@ const Getbooks = () => {
 
   const getBooks = async () => {
     setLoading(true);
+ 
     try {
       const querySnapshot = await getDocs(collection(db, "Book"));
       const books = querySnapshot.docs.map((doc) => ({
@@ -35,13 +36,37 @@ const Getbooks = () => {
   useEffect(() => {
     getBooks();
   }, []);
+     const [q, setQ] = useState("");
+     const [searchParam] = useState(["title", "title"]);
+  function search(items) {
+    return items.filter((item) => {
+      return searchParam.some((newItem) => {
+        return (
+          item[newItem].toString().toLowerCase().indexOf(q.toLowerCase()) > -1
+        );
+      });
+    });
+  }
+
   return (
-    <div className="grid grid-cols-3 gap-8 ">
-      {books.map((book) => {
-        return <Bookcard key={book.id} {...book} />;
-      })}
-      {/* <AddDoc/> */}
-    </div>
+    <>
+      {" "}
+      <input
+        className="Search mx-2"
+        type="text"
+        placeholder="Search"
+        value={q}
+        onChange={(e) => setQ(e.target.value)}
+      />
+      <div className="grid grid-cols-3 gap-8 ">
+        {search(books)
+          .slice(0)
+          .map((book) => {
+            return <Bookcard key={book.id} {...book} />;
+          })}
+        {/* <AddDoc/> */}
+      </div>
+    </>
   );
 };
 
