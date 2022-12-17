@@ -38,7 +38,7 @@ function App() {
           >
             Logout
           </button>
-          <Search />
+      
           <Router>
             <Routes>
               <Route
