@@ -31,6 +31,7 @@ function App() {
         </div>
         <div className="col-span-3">
           {/* {JSON.stringify(cookies.firebaseAccessToken)} */}
+
           <Router>
             <Routes>
               <Route
