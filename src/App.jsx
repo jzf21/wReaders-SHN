@@ -1,18 +1,20 @@
-import "./App.scss";
-import Bookcard from "./Components/bookcard";
-import Sidebar from "./Components/Sidebar";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "./App.scss"
+import Bookcard from "./Components/bookcard"
+import Sidebar from "./Components/Sidebar"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 
-import { initializeApp } from "firebase/app";
+import { initializeApp } from "firebase/app"
 
-import { app } from "./Components/firebase-config";
-import Signup from "./Components/Signup";
-import Login from "./Components/Login";
-import { useState } from "react";
-import Getbooks from "./Components/Getbooks";
+import { app } from "./Components/firebase-config"
+import Signup from "./Components/Signup"
+import Login from "./Components/Login"
+import { useState } from "react"
+import Getbooks from "./Components/Getbooks"
+
+import { useCookies } from "react-cookie"
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null)
 
   return (
     <>
@@ -38,7 +40,7 @@ function App() {
         </div>
       </div>
     </>
-  );
+  )
 }
 
-export default App;
+export default App
