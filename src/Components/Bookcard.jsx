@@ -1,6 +1,6 @@
 import React from "react";
 
-const Bookcard = () => {
+const Bookcard = ({title,authors}) => {
   return (
     <>
       <div className="max-w-xs rounded-md shadow-md dark:bg-gray-900 dark:text-gray-100">
@@ -12,10 +12,10 @@ const Bookcard = () => {
         <div className="flex flex-col justify-between p-6 space-y-8">
           <div className="space-y-2">
             <h2 className="text-3xl font-semibold tracking-wide">
-              Donec lectus leo
+              {title}
             </h2>
             <p className="dark:text-gray-100">
-              Curabitur luctus erat nunc, sed ullamcorper erat vestibulum eget.
+              {authors}
             </p>
           </div>
           <button
