@@ -36,7 +36,7 @@ const Getbooks = () => {
     getBooks();
   }, []);
   return (
-    <div>
+    <div className="grid grid-cols-3 gap-8 ">
       {books.map((book) => {
         return <Bookcard key={book.id} {...book} />;
       })}

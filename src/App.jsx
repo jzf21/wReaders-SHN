@@ -1,33 +1,38 @@
-import "./App.scss"
-import Bookcard from "./Components/bookcard"
-import Sidebar from "./Components/Sidebar"
-import { BrowserRouter as Router, Routes, Route,useNavigate } from "react-router-dom"
+import "./App.scss";
+import Bookcard from "./Components/bookcard";
+import Sidebar from "./Components/Sidebar";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+} from "react-router-dom";
 
-import { initializeApp } from "firebase/app"
+import { initializeApp } from "firebase/app";
 
-import { app } from "./Components/firebase-config"
-import Signup from "./Components/Signup"
-import Login from "./Components/Login"
-import { useState } from "react"
-import Getbooks from "./Components/Getbooks"
+import { app } from "./Components/firebase-config";
+import Signup from "./Components/Signup";
+import Login from "./Components/Login";
+import { useState } from "react";
+import Getbooks from "./Components/Getbooks";
 
-import { useCookies } from "react-cookie"
+import { useCookies } from "react-cookie";
 
 function App() {
-  const [user, setUser] = useState(null)
-  const [cookies, setCookie, removeCookie] = useCookies("firebaseAccessToken")
- 
+  const [user, setUser] = useState(null);
+  const [cookies, setCookie, removeCookie] = useCookies("firebaseAccessToken");
+
   return (
     <>
-      <div className="grid grid-cols-2">
+      <div className="grid grid-cols-4">
         <div className="col-span-1">
           <Sidebar />
         </div>
-        <div className="col-span-1">
-          {JSON.stringify(cookies.firebaseAccessToken)}
+        <div className="col-span-3">
+          {/* {JSON.stringify(cookies.firebaseAccessToken)} */}
           <button
             onClick={() => {
-              removeCookie("firebaseAccessToken")
+              removeCookie("firebaseAccessToken");
             }}
           >
             Logout
@@ -60,7 +65,7 @@ function App() {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
