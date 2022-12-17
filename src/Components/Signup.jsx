@@ -48,7 +48,7 @@ const Signup = ({ firebaseapp, setUser, setCookie }) => {
       onSubmit={handleSubmit}
     >
       <div class="w-full md:w-1/2 flex flex-col items-center ">
-        <h1 class="text-center text-2xl font-bold text-gray-600 mb-6">Login</h1>
+        <h1 class="text-center text-2xl font-bold text-gray-600 mb-6">Sign Up</h1>
         <div class="w-3/4 mb-6">
           <input
             type="email"
@@ -87,7 +87,7 @@ const Signup = ({ firebaseapp, setUser, setCookie }) => {
             type="submit"
             class="py-4 bg-blue-400 w-full rounded text-blue-50 font-bold hover:bg-blue-700"
           >
-            Login
+            Signup
           </button>
         </div>
       </div>
