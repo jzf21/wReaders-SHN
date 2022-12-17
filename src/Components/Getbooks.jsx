@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { db } from "./firebase-config";
 import Bookcard from "./bookcard";
+import AddDoc from "./AddDoc";
 
 const Getbooks = () => {
   const [books, setBooks] = useState([]);
@@ -39,6 +40,7 @@ const Getbooks = () => {
       {books.map((book) => {
         return <Bookcard key={book.id} {...book} />;
       })}
+      {/* <AddDoc/> */}
     </div>
   );
 };
