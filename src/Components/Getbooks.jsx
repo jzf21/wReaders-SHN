@@ -18,9 +18,10 @@ const Getbooks = () => {
 
   const getBooks = async () => {
     setLoading(true);
- 
+
     try {
       const querySnapshot = await getDocs(collection(db, "Book"));
+      const bookitem = await getDocs(collection(db, "book_item"));
       const books = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
@@ -36,8 +37,8 @@ const Getbooks = () => {
   useEffect(() => {
     getBooks();
   }, []);
-     const [q, setQ] = useState("");
-     const [searchParam] = useState(["title", "title"]);
+  const [q, setQ] = useState("");
+  const [searchParam] = useState(["title", "title"]);
   function search(items) {
     return items.filter((item) => {
       return searchParam.some((newItem) => {
@@ -62,7 +63,14 @@ const Getbooks = () => {
         {search(books)
           .slice(0)
           .map((book) => {
-            return <Bookcard key={book.id} {...book} />;
+            return (
+              <Bookcard
+                key={book.id}
+                url={book.thumbnailUrl}
+                title={book.title}
+                authors={book.authors}
+              />
+            );
           })}
         {/* <AddDoc/> */}
       </div>
