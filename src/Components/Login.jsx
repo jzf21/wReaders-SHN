@@ -5,7 +5,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth"
 
-const Login = ({ firebaseapp, setUser }) => {
+const Login = ({ firebaseapp, setUser, setCookie }) => {
   const [state, setState] = useState({
     email: "",
     password: "",
@@ -30,6 +30,10 @@ const Login = ({ firebaseapp, setUser }) => {
         // Signed in
         console.log(userCredential.user)
         setUser(userCredential.user)
+        setCookie("firebaseAccessToken", userCredential.user.accessToken, {
+          path: "/",
+        })
+
         // ...
       })
       .catch((error) => {

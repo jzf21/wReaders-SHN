@@ -15,6 +15,7 @@ import { useCookies } from "react-cookie"
 
 function App() {
   const [user, setUser] = useState(null)
+  const [cookies, setCookie, removeCookie] = useCookies("firebaseAccessToken")
 
   return (
     <>
@@ -23,16 +24,35 @@ function App() {
           <Sidebar />
         </div>
         <div className="col-span-1">
-          {JSON.stringify(user)}
+          {JSON.stringify(cookies.firebaseAccessToken)}
+          <button
+            onClick={() => {
+              removeCookie("firebaseAccessToken")
+            }}
+          >
+            Logout
+          </button>
           <Router>
             <Routes>
               <Route
                 path="/signup"
-                element={<Signup firebaseApp={app} setUser={setUser} />}
+                element={
+                  <Signup
+                    firebaseApp={app}
+                    setUser={setUser}
+                    setCookie={setCookie}
+                  />
+                }
               />
               <Route
                 path="/login"
-                element={<Login firebaseApp={app} setUser={setUser} />}
+                element={
+                  <Login
+                    firebaseApp={app}
+                    setUser={setUser}
+                    setCookie={setCookie}
+                  />
+                }
               />
               <Route path="/books" element={<Getbooks />} />
             </Routes>
