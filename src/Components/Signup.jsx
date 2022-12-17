@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { useNavigate } from "react-router"
 
 import {
   getAuth,
@@ -7,6 +8,8 @@ import {
 } from "firebase/auth"
 
 const Signup = ({ firebaseapp, setUser, setCookie }) => {
+  const navigate = useNavigate()
+
   const [state, setState] = useState({
     email: "",
     password: "",
@@ -18,7 +21,6 @@ const Signup = ({ firebaseapp, setUser, setCookie }) => {
       ...prevState,
       [name]: value,
     }))
-    console.log(state)
   }
 
   const auth = getAuth(firebaseapp)
@@ -29,10 +31,11 @@ const Signup = ({ firebaseapp, setUser, setCookie }) => {
       .then((userCredential) => {
         // Signed in
         setUser(userCredential.user)
-        console.log(user)
+        console.log(userCredential.user)
         setCookie("firebaseAccessToken", userCredential.user.accessToken, {
           path: "/",
         })
+        navigate("/books")
         // ...
       })
       .catch((error) => {
@@ -48,7 +51,9 @@ const Signup = ({ firebaseapp, setUser, setCookie }) => {
       onSubmit={handleSubmit}
     >
       <div class="w-full md:w-1/2 flex flex-col items-center ">
-        <h1 class="text-center text-2xl font-bold text-gray-600 mb-6">Sign Up</h1>
+        <h1 class="text-center text-2xl font-bold text-gray-600 mb-6">
+          Sign Up
+        </h1>
         <div class="w-3/4 mb-6">
           <input
             type="email"

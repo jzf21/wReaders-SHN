@@ -19,7 +19,6 @@ const Login = ({ firebaseapp, setUser, setCookie }) => {
       ...prevState,
       [name]: value,
     }))
-    console.log(state)
   }
 
   const auth = getAuth(firebaseapp)
