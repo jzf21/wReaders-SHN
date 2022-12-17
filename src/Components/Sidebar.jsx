@@ -1,14 +1,16 @@
-import React from "react"
-import { useCookies } from "react-cookie"
-
+import React from "react";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 const Sidebar = () => {
-  const [cookies, setCookie, removeCookie] = useCookies("firebaseAccessToken")
+  const [cookies, setCookie, removeCookie] = useCookies("firebaseAccessToken");
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     removeCookie("firebaseAccessToken", {
       path: "/",
-    })
-  }
+    });
+    navigate("/login");
+  };
 
   return (
     <div>
@@ -183,7 +185,7 @@ const Sidebar = () => {
         </div>
       </aside>
     </div>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;

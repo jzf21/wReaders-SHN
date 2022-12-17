@@ -5,6 +5,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth"
+import { useNavigate } from "react-router-dom"
 
 const Signup = ({ firebaseapp, setUser, setCookie }) => {
   const [state, setState] = useState({
@@ -33,6 +34,7 @@ const Signup = ({ firebaseapp, setUser, setCookie }) => {
         setCookie("firebaseAccessToken", userCredential.user.accessToken, {
           path: "/",
         })
+        navigate("/books")
         // ...
       })
       .catch((error) => {

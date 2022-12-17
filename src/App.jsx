@@ -25,14 +25,15 @@ function App() {
 
   return (
     <>
-      <div className="grid grid-cols-4">
-        <div className="col-span-1">
-          <Sidebar />
-        </div>
-        <div className="col-span-3">
-          {/* {JSON.stringify(cookies.firebaseAccessToken)} */}
+      {" "}
+      <Router>
+        <div className="grid grid-cols-4">
+          <div className="col-span-1">
+            <Sidebar />
+          </div>
+          <div className="col-span-3">
+            {/* {JSON.stringify(cookies.firebaseAccessToken)} */}
 
-          <Router>
             <Routes>
               <Route
                 path="/signup"
@@ -56,11 +57,11 @@ function App() {
               />
               <Route path="/books" element={<Getbooks />} />
             </Routes>
-          </Router>
+          </div>
         </div>
-      </div>
+      </Router>
     </>
-  )
+  );
 }
 
 export default App
