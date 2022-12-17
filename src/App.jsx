@@ -10,11 +10,12 @@ import {
 
 import { initializeApp } from "firebase/app";
 
-import { app } from "./Components/firebase-config";
-import Signup from "./Components/Signup";
-import Login from "./Components/Login";
-import { useState } from "react";
-import Getbooks from "./Components/Getbooks";
+import { app } from "./Components/firebase-config"
+import Signup from "./Components/Signup"
+import Login from "./Components/Login"
+import { useState } from "react"
+import Getbooks from "./Components/Getbooks"
+import Search from "./Components/Search"
 
 import { useCookies } from "react-cookie";
 
@@ -37,6 +38,7 @@ function App() {
           >
             Logout
           </button>
+          <Search />
           <Router>
             <Routes>
               <Route
