@@ -36,7 +36,7 @@ function App() {
 
             <Routes>
               <Route
-                path="/signup"
+                path="/"
                 element={
                   <Signup
                     firebaseApp={app}
