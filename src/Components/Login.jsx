@@ -4,12 +4,14 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth"
+import { useNavigate } from "react-router-dom"
 
 const Login = ({ firebaseapp, setUser, setCookie }) => {
   const [state, setState] = useState({
     email: "",
     password: "",
   })
+  const navigate= useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target

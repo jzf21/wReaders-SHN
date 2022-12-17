@@ -3,7 +3,7 @@ import React from "react";
 const Sidebar = () => {
   return (
     <div>
-      <aside class="w-64  sticky" aria-label="Sidebar">
+      <aside class="w-64  left-0 top-0 fixed" aria-label="Sidebar">
         <div class="overflow-y-auto h-[100vh] py-4 px-3 bg-gray-50 rounded dark:bg-gray-800">
           <ul class="space-y-2">
             <li>
