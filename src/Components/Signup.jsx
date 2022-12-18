@@ -6,7 +6,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+
 
 const Signup = ({ firebaseapp, setUser, setCookie }) => {
   const navigate = useNavigate()
