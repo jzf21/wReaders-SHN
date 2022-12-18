@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getFirestore, collection, onSnapshot, getDoc, getDocs, query, limit, where, doc, DocumentReference } from "firebase/firestore";
 import { db } from "./firebase-config";
 import Bookcard from "./bookcard";
 import AddDoc from "./AddDoc";
@@ -8,7 +8,6 @@ const Getbooks = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [query, setQuery] = useState("");
   const [filteredBooks, setFilteredBooks] = useState([]);
   const [showFiltered, setShowFiltered] = useState(false);
   const [showAll, setShowAll] = useState(true);
@@ -17,11 +16,11 @@ const Getbooks = () => {
   const [showDelete, setShowDelete] = useState(false);
 
   const getBooks = async () => {
+
     setLoading(true);
 
     try {
       const querySnapshot = await getDocs(collection(db, "Book"));
-      const bookitem = await getDocs(collection(db, "book_item"));
       const books = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
@@ -50,30 +49,22 @@ const Getbooks = () => {
   }
 
   return (
-    <>
-      {" "}
-      {/* <input
-        className="Search mx-2"
-        type="text"
-        placeholder="Search"
-        value={q}
-        onChange={(e) => setQ(e.target.value)}
-      /> */}
+    <div>
       <div class="flex justify-center">
-      <div class="mb-3 xl:w-96">
-        <div class="input-group relative flex flex-wrap items-stretch w-full mb-4">
-          <input
-            type="text"
-            placeholder="Search for books"
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
-          
-            class="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-     
-            aria-label="Search"
-            aria-describedby="button-addon2"
-          />
-          {/* <button
+        <div class="mb-3 xl:w-96">
+          <div class="input-group relative flex flex-wrap items-stretch w-full mb-4">
+            <input
+              type="text"
+              placeholder="Search for books"
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+
+              class="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+
+              aria-label="Search"
+              aria-describedby="button-addon2"
+            />
+            {/* <button
             class="btn inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700  focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out flex items-center"
             type="button"
             id="button-addon2"
@@ -94,27 +85,37 @@ const Getbooks = () => {
               ></path>
             </svg>
           </button> */}
-        
-        </div>
+
+          </div>
         </div>
       </div>
       <div className="grid grid-cols-3 gap-8 ">
-        {search(books)
-          .slice(0)
-          .map((book) => {
-            return (
-              <Bookcard
-                key={book.id}
-                url={book.thumbnailUrl}
-                title={book.title}
-                authors={book.authors}
-              />
-            );
-          })}
-        {/* <AddDoc/> */}
+        {
+          search(books)
+            .slice(0)
+            .map((book) => {
+              const bookItems = query(collection(db, "book_item"), where("book_item_id", "==", book._id), where("isReservable", "==", true));
+              onSnapshot(bookItems, (q) => {
+                q.docs.forEach((doc) => {
+                  console.log(doc.id);
+                  return (
+                    <Bookcard
+                      key={doc.id}
+                      url={book.thumbnailUrl}
+                      title={book.title}
+                      authors={book.authors}
+                    />
+                  );
+                });
+              })
+            })}
+
       </div>
-    </>
+    </div>
+
+
   );
-};
+
+}
 
 export default Getbooks;
