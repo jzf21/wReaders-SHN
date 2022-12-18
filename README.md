@@ -19,7 +19,8 @@ Team id here
 React.js
 Firebase
 ## How to configure
-git clone 
+git clone https://github.com/jzf21/wReaders-SHN.git
+cd wReaders-SHN
 ## How to Run
 Instructions for running
 npm i
