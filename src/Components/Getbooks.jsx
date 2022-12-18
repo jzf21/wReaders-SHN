@@ -1,15 +1,9 @@
 import React, { useEffect, useState } from "react";
-import {
-  getFirestore,
-  collection,
-  getDocs,
-  where,
-  query,
-} from "firebase/firestore";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { db } from "./firebase-config";
 import Bookcard from "./bookcard";
 import AddDoc from "./AddDoc";
-import { Query } from "firebase/firestore";
+
 const Getbooks = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -40,7 +34,6 @@ const Getbooks = () => {
       setLoading(false);
     }
   };
-
   useEffect(() => {
     getBooks();
   }, []);
@@ -106,11 +99,6 @@ const Getbooks = () => {
         {search(books)
           .slice(0)
           .map((book) => {
-            const bookItems = query(
-              collection(db, "book_item"),
-              where("book_item_id", "==", book.id)
-            );
-            console.log(bookItems);
             return (
               <Bookcard
                 key={book.id}
