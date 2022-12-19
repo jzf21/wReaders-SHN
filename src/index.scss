@@ -2,15 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-
 form {
-    input {
-        border: 1px solid black;
-
-    }
+  input {
+    border: 1px solid black;
+  }
 }
 
-button{
-    background-color: red;
-    
+button {
+  background-color: red;
+}
+button:disabled {
+  background-color: gray;
 }

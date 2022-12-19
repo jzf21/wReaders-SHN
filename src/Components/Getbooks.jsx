@@ -1,5 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  onSnapshot,
+  getDoc,
+  getDocs,
+  query,
+  limit,
+  where,
+  doc,
+  DocumentReference,
+} from "firebase/firestore";
 import { db } from "./firebase-config";
 import Bookcard from "./bookcard";
 import AddDoc from "./AddDoc";
@@ -8,7 +19,6 @@ const Getbooks = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [query, setQuery] = useState("");
   const [filteredBooks, setFilteredBooks] = useState([]);
   const [showFiltered, setShowFiltered] = useState(false);
   const [showAll, setShowAll] = useState(true);
@@ -21,13 +31,11 @@ const Getbooks = () => {
 
     try {
       const querySnapshot = await getDocs(collection(db, "Book"));
-      const bookitem = await getDocs(collection(db, "book_item"));
       const books = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
       setBooks(books);
-      console.log(books);
       setLoading(false);
     } catch (error) {
       setError(error);
@@ -50,15 +58,7 @@ const Getbooks = () => {
   }
 
   return (
-    <>
-      {" "}
-      {/* <input
-        className="Search mx-2"
-        type="text"
-        placeholder="Search"
-        value={q}
-        onChange={(e) => setQ(e.target.value)}
-      /> */}
+    <div>
       <div class="flex justify-center">
         <div class="mb-3 xl:w-96">
           <div class="input-group relative flex flex-wrap items-stretch w-full mb-4">
@@ -99,18 +99,19 @@ const Getbooks = () => {
         {search(books)
           .slice(0)
           .map((book) => {
+            console.log(book.isRerservable);
             return (
               <Bookcard
                 key={book.id}
                 url={book.thumbnailUrl}
                 title={book.title}
                 authors={book.authors}
+                isReservable={book.isRerservable}
               />
             );
           })}
-        {/* <AddDoc/> */}
       </div>
-    </>
+    </div>
   );
 };
 
