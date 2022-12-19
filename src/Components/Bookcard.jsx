@@ -1,6 +1,7 @@
 import React from "react";
+import { useState } from "react";
 
-const Bookcard = ({ title, authors, url }) => {
+const Bookcard = ({ title, authors, url, isReservable }) => {
   return (
     <>
       <div className="max-w-xs rounded-md shadow-md dark:bg-gray-900 dark:text-gray-100">
@@ -17,12 +18,20 @@ const Bookcard = ({ title, authors, url }) => {
           <button
             type="button"
             className="flex items-center justify-center w-full p-3 font-semibold tracking-wide rounded-md dark:bg-violet-400 dark:text-gray-900"
+            keyProp="rent"
+            disabled={!isReservable}
+
+            onClick={() => {
+              console.log("clicked")
+            }}
           >
-            Rent Book
+            {isReservable ? "Rent" : "Not Available to rent"}
           </button>
           <button
             type="button"
             className="flex items-center justify-center w-full p-3 font-semibold tracking-wide rounded-md dark:bg-violet-400 dark:text-gray-900"
+            keyprop="reserve"
+
           >
             Reserve
           </button>
