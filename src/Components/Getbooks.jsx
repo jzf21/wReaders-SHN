@@ -26,7 +26,6 @@ const Getbooks = () => {
         ...doc.data(),
       }));
       setBooks(books);
-      console.log(books);
       setLoading(false);
     } catch (error) {
       setError(error);
@@ -94,21 +93,20 @@ const Getbooks = () => {
           search(books)
             .slice(0)
             .map((book) => {
-              const bookItems = query(collection(db, "book_item"), where("book_item_id", "==", book._id), where("isReservable", "==", true));
-              onSnapshot(bookItems, (q) => {
-                q.docs.forEach((doc) => {
-                  console.log(doc.id);
-                  return (
-                    <Bookcard
-                      key={doc.id}
-                      url={book.thumbnailUrl}
-                      title={book.title}
-                      authors={book.authors}
-                    />
-                  );
-                });
-              })
-            })}
+              console.log(book.isRerservable)
+              return (
+                <Bookcard
+                  key={book.id}
+                  url={book.thumbnailUrl}
+                  title={book.title}
+                  authors={book.authors}
+                  isReservable={book.isRerservable}
+                />
+
+              );
+            }
+            )
+        }
 
       </div>
     </div>
