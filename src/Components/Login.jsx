@@ -72,7 +72,7 @@ const Login = ({ firebaseapp, setUser, setCookie }) => {
             onChange={handleChange}
           />
         </div>
-        {/* <div class="w-3/4 flex flex-row justify-between">
+        <div class="w-3/4 flex flex-row justify-between">
           <div class=" flex items-center gap-x-1">
             <input type="checkbox" name="remember" id="" class=" w-4 h-4  " />
             <label for="" class="text-sm text-slate-400">
@@ -84,7 +84,7 @@ const Login = ({ firebaseapp, setUser, setCookie }) => {
               Forgot?
             </a>
           </div>
-        </div> */}
+        </div>
         <div class="w-3/4 mt-4">
           <button
             type="submit"

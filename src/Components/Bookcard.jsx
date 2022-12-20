@@ -2,8 +2,10 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+
 const Bookcard = ({ book }) => {
   const navigate = useNavigate();
+
   return (
     <>
       <div className="max-w-xs rounded-md shadow-md dark:bg-gray-900 dark:text-gray-100">
@@ -21,11 +23,13 @@ const Bookcard = ({ book }) => {
             type="button"
             className="flex items-center justify-center w-full p-3 font-semibold tracking-wide rounded-md dark:bg-violet-400 dark:text-gray-900"
             keyProp="rent"
+
             disabled={!book.isRerservable}
 
             onClick={() => {
               navigate("/view-book", { state: { book: book, id: book.id } });
               console.log("clicked")
+
             }}
           >
             {book.isRerservable ? "Rent" : "Not Available to rent"}
@@ -34,7 +38,6 @@ const Bookcard = ({ book }) => {
             type="button"
             className="flex items-center justify-center w-full p-3 font-semibold tracking-wide rounded-md dark:bg-violet-400 dark:text-gray-900"
             keyprop="reserve"
-
           >
             Reserve
           </button>
