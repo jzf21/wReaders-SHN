@@ -1,6 +1,7 @@
 import "./App.scss"
 import Bookcard from "./Components/bookcard"
 import Sidebar from "./Components/Sidebar"
+import ViewBook from "./Components/ViewBook"
 import {
   BrowserRouter as Router,
   Routes,
@@ -56,6 +57,7 @@ function App() {
                 }
               />
               <Route path="/books" element={<Getbooks />} />
+              <Route path="/view-book" element={<ViewBook />} />
             </Routes>
           </div>
         </div>
