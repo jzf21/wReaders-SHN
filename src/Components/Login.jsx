@@ -5,7 +5,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth"
 import { useNavigate } from "react-router-dom"
-import AddDoc from "./AddDoc"
+// import AddDoc from "./AddDoc"
 
 const Login = ({ firebaseapp, setUser, setCookie }) => {
   const [state, setState] = useState({
@@ -60,7 +60,7 @@ const Login = ({ firebaseapp, setUser, setCookie }) => {
             placeholder="Email"
             onChange={handleChange}
           />
-          <AddDoc />
+          {/* <AddDoc /> */}
         </div>
         <div class="w-3/4 mb-6">
           <input

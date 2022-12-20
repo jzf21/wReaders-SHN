@@ -96,11 +96,7 @@ const Getbooks = () => {
               console.log(book.isRerservable)
               return (
                 <Bookcard
-                  key={book.id}
-                  url={book.thumbnailUrl}
-                  title={book.title}
-                  authors={book.authors}
-                  isReservable={book.isRerservable}
+                  book={book}
                 />
 
               );
