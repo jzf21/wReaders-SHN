@@ -29,7 +29,9 @@ const Login = ({ firebaseapp, setUser, setCookie }) => {
     console.log("loggingin")
     signInWithEmailAndPassword(auth, state.email, state.password)
       .then((userCredential) => {
+
         // Signed in
+        console.log("logged in")
         console.log(userCredential.user)
         setUser(userCredential.user)
         setCookie("firebaseAccessToken", userCredential.user.accessToken, {
