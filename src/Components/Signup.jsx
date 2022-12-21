@@ -4,8 +4,15 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-} from "firebase/auth"
-import { useNavigate } from "react-router-dom"
+
+} from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { db } from "./firebase-config";
+import { doc, addDoc, collection, setDoc } from "firebase/firestore";
+
+
+
+
 
 const Signup = ({ firebaseapp, setUser, setCookie }) => {
   const navigate = useNavigate()
@@ -32,6 +39,11 @@ const Signup = ({ firebaseapp, setUser, setCookie }) => {
         // Signed in
         setUser(userCredential.user)
         console.log(userCredential.user)
+        const id = userCredential.user.uid + "";
+        setDoc(doc(db, "User", userCredential.user.uid), {
+          _id: userCredential.user.uid,
+          email: userCredential.user.email,
+        })
         setCookie("firebaseAccessToken", userCredential.user.accessToken, {
           path: "/",
         })
@@ -39,9 +51,14 @@ const Signup = ({ firebaseapp, setUser, setCookie }) => {
         // ...
       })
       .catch((error) => {
-        console.log(error)
-      })
-  }
+
+        console.log("error");
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+      });
+  };
+
 
   return (
     <form
