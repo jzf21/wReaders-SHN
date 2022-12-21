@@ -42,8 +42,7 @@ const Login = ({ firebaseapp, setUser, setCookie }) => {
         // ...
       })
       .catch((error) => {
-        const errorCode = error.code
-        const errorMessage = error.message
+        console.log(error)
       })
   }
   return (

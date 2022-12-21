@@ -4,10 +4,13 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { db } from "./firebase-config";
 import { doc, addDoc, collection, setDoc } from "firebase/firestore";
+
+
 
 
 
@@ -17,20 +20,20 @@ const Signup = ({ firebaseapp, setUser, setCookie }) => {
   const [state, setState] = useState({
     email: "",
     password: "",
-  });
+  })
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setState((prevState) => ({
       ...prevState,
       [name]: value,
     }))
   }
 
-  const auth = getAuth(firebaseapp);
+  const auth = getAuth(firebaseapp)
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     createUserWithEmailAndPassword(auth, state.email, state.password)
       .then((userCredential) => {
         // Signed in
@@ -48,12 +51,14 @@ const Signup = ({ firebaseapp, setUser, setCookie }) => {
         // ...
       })
       .catch((error) => {
+
         console.log("error");
         const errorCode = error.code;
         const errorMessage = error.message;
         // ..
       });
   };
+
 
   return (
     <form
@@ -107,7 +112,7 @@ const Signup = ({ firebaseapp, setUser, setCookie }) => {
         </div>
       </div>
     </form>
-  );
-};
+  )
+}
 
-export default Signup;
+export default Signup

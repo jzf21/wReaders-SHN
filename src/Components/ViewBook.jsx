@@ -15,6 +15,7 @@ import { db } from "./firebase-config";
 import { Navigate, useLocation } from "react-router-dom";
 
 const ViewBook = () => {
+
     const user = getAuth().currentUser;
     if (user == null)
         Navigate("/login");
@@ -62,6 +63,7 @@ const ViewBook = () => {
             </div>
         </div>
     );
+
 };
 
 export default ViewBook;
