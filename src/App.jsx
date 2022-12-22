@@ -34,7 +34,7 @@ function App() {
             <Sidebar />
           </div>
           <Bottomnav />
-          <div className="col-span-1 md:col-span-3">
+          <div className=" content-center justify-center mx-auto col-span-3">
             {/* {JSON.stringify(cookies.firebaseAccessToken)} */}
 
             <Routes>

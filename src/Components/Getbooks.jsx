@@ -95,24 +95,13 @@ const Getbooks = () => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-3 gap-8 ">
-
-        {
-          search(books)
-            .slice(0)
-            .map((book) => {
-              console.log(book.isRerservable)
-              return (
-                <Bookcard
-                  book={book}
-                />
-
-              );
-            }
-            )
-        }
-
-
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 content-center">
+        {search(books)
+          .slice(0)
+          .map((book) => {
+            console.log(book.isRerservable);
+            return <Bookcard book={book} />;
+          })}
       </div>
     </div>
   );
