@@ -86,10 +86,10 @@ const Signup = ({ firebaseapp, setUser, setCookie }) => {
 
   return (
     <form
-      class="flex justify-center h-full w-full items-center"
+      class="flex justify-center h-full w-full items-center mt-5"
       onSubmit={handleSubmit}
     >
-      <div class="w-full md:w-1/2 flex flex-col items-center ">
+      <div class="w-[400px] flex flex-col items-center ">
         <h1 class="text-center text-2xl font-bold text-gray-600 mb-6">
           Sign Up
         </h1>

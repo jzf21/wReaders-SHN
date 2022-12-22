@@ -20,6 +20,7 @@ import Search from "./Components/Search";
 
 import { useCookies } from "react-cookie";
 import Bottomnav from "./Components/Bottomnav";
+import AboutUserform from "./Components/AboutUserform";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -60,6 +61,7 @@ function App() {
               />
               <Route path="/books" element={<Getbooks />} />
               <Route path="/view-book" element={<ViewBook />} />
+              <Route path="/myprofile" element={<AboutUserform />} />
             </Routes>
           </div>
         </div>
