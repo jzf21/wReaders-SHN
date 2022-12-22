@@ -10,6 +10,8 @@ Hosted at [https://online-library-shn.netlify.app/]
 Team id here
 ## Link to product walkthrough
 [link to video]
+## About
+An online library service that offers both rental and subscription options allows users to choose the best option for their reading needs. In addition, the service utilizes a credit-based system to reward avid readers, providing an incentive to continue using the service. This system allows users to earn credits by participating in certain activities, such as referring friends or writing reviews, which can then be used to offset the cost of future rentals or subscriptions. The service also offers a wide range of digital books and audio books, making it convenient for users to access their favorite titles from any device with an internet connection. Overall, the combination of rental, subscription, and credit-based options makes this online library service a flexible and rewarding choice for avid readers.
 ## How it Works ?
 1. An offline library that helps reader to select books of their choice and will be delivered to their house or can be collected from a common collection area depending on their choice.
 2. The platform promotes reading culture by offering credits which can be recieved by renting books.
