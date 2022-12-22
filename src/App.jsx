@@ -1,38 +1,40 @@
-import "./App.scss"
-import Bookcard from "./Components/bookcard"
-import Sidebar from "./Components/Sidebar"
-import ViewBook from "./Components/ViewBook"
+import "./App.scss";
+import Bookcard from "./Components/bookcard";
+import Sidebar from "./Components/Sidebar";
+import ViewBook from "./Components/ViewBook";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   useNavigate,
-} from "react-router-dom"
+} from "react-router-dom";
 
-import { initializeApp } from "firebase/app"
+import { initializeApp } from "firebase/app";
 
-import { app } from "./Components/firebase-config"
-import Signup from "./Components/Signup"
-import Login from "./Components/Login"
-import { useState } from "react"
-import Getbooks from "./Components/Getbooks"
-import Search from "./Components/Search"
+import { app } from "./Components/firebase-config";
+import Signup from "./Components/Signup";
+import Login from "./Components/Login";
+import { useState } from "react";
+import Getbooks from "./Components/Getbooks";
+import Search from "./Components/Search";
 
-import { useCookies } from "react-cookie"
+import { useCookies } from "react-cookie";
+import Bottomnav from "./Components/Bottomnav";
 
 function App() {
-  const [user, setUser] = useState(null)
-  const [cookies, setCookie, removeCookie] = useCookies("firebaseAccessToken")
+  const [user, setUser] = useState(null);
+  const [cookies, setCookie, removeCookie] = useCookies("firebaseAccessToken");
 
   return (
     <>
       {" "}
       <Router>
-        <div className="grid grid-cols-4">
-          <div className="col-span-1">
+        <div className="grid grid-cols-1 md:grid-cols-4">
+          <div className="hidden md:block  col-span-1">
             <Sidebar />
           </div>
-          <div className="col-span-3">
+          <Bottomnav />
+          <div className="col-span-1 md:col-span-3">
             {/* {JSON.stringify(cookies.firebaseAccessToken)} */}
 
             <Routes>
@@ -66,4 +68,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
