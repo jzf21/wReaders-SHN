@@ -3,7 +3,8 @@ import React from "react";
 const AboutUserform = () => {
   return (
     <div>
-      <form class="w-full max-w-lg">
+      <form class="w-full max-w-lg mt-5 my-5">
+        <h1 className="flex justify-center text-3xl p-5 font-semibold ">My Profile</h1>
         <div class="flex flex-wrap -mx-3 mb-6">
           <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
             <label
@@ -43,13 +44,13 @@ const AboutUserform = () => {
               class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
               for="grid-password"
             >
-              Password
+              Address
             </label>
             <input
               class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               id="grid-password"
-              type="password"
-              placeholder="******************"
+              type="address"
+              placeholder="House no/name,XYZ STREET"
             />
             <p class="text-gray-600 text-xs italic">
               Make it as long and as crazy as you'd like
