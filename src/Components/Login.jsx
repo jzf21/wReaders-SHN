@@ -1,56 +1,55 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-} from "firebase/auth"
-import { useNavigate } from "react-router-dom"
+} from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 // import AddDoc from "./AddDoc"
 
 const Login = ({ firebaseapp, setUser, setCookie }) => {
   const [state, setState] = useState({
     email: "",
     password: "",
-  })
-  const navigate = useNavigate()
+  });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setState((prevState) => ({
       ...prevState,
       [name]: value,
-    }))
-  }
+    }));
+  };
 
-  const auth = getAuth(firebaseapp)
+  const auth = getAuth(firebaseapp);
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log("loggingin")
+    e.preventDefault();
+    console.log("loggingin");
     signInWithEmailAndPassword(auth, state.email, state.password)
       .then((userCredential) => {
-
         // Signed in
-        console.log("logged in")
-        console.log(userCredential.user)
-        setUser(userCredential.user)
+        console.log("logged in");
+        console.log(userCredential.user);
+        setUser(userCredential.user);
         setCookie("firebaseAccessToken", userCredential.user.accessToken, {
           path: "/",
-        })
-        navigate("/books")
+        });
+        navigate("/books");
 
         // ...
       })
       .catch((error) => {
-        console.log(error)
-      })
-  }
+        console.log(error);
+      });
+  };
   return (
     <form
-      class="flex justify-center h-full w-full items-center"
+      class="flex justify-center h-full w-full md:min-w-[600px] items-center mt-5"
       onSubmit={handleSubmit}
     >
-      <div class="w-full md:w-1/2 flex flex-col items-center ">
+      <div class="w-full md:w-1/2 flex flex-col items-center md:min-w-[400px] ">
         <h1 class="text-center text-2xl font-bold text-gray-600 mb-6">Login</h1>
         <div class="w-3/4 mb-6">
           <input
@@ -96,7 +95,7 @@ const Login = ({ firebaseapp, setUser, setCookie }) => {
         </div>
       </div>
     </form>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

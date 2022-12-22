@@ -43,7 +43,7 @@ const ViewBook = () => {
                 <p>Categories:{book.categories}</p>
                 <p className="w-[50%] hidden">{book.longDescription}</p>
 
-                <button disabled={!book.isRerservable} onClick={() => {
+                <button className="bg-blue-800 px-2 rounded-lg" disabled={!book.isRerservable} onClick={() => {
                     addDoc(userLoansRef, {
                         _id: book.id,
                     }).then(() => {

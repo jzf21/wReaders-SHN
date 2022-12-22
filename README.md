@@ -10,6 +10,8 @@ Hosted at [https://online-library-shn.netlify.app/]
 Team id here
 ## Link to product walkthrough
 [link to video]
+## About
+Our online library service offers both rental and subscription options for access to a vast selection of books. Customers have the choice to have books delivered to their home or pick them up at an offline library location. In addition, we have implemented a credit-based rewards system for avid readers who regularly borrow and return books. With our convenient and flexible options, customers can easily access the literature they love from the comfort of their own home or at a nearby library.
 ## How it Works ?
 1. An offline library that helps reader to select books of their choice and will be delivered to their house or can be collected from a common collection area depending on their choice.
 2. The platform promotes reading culture by offering credits which can be recieved by renting books.
