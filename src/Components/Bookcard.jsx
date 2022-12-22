@@ -30,14 +30,14 @@ const Bookcard = ({ book }) => {
               console.log("clicked");
             }}
           >
-            {book.isRerservable ? "Rent" : "Not Available to rent"}
+            {book.isRerservable ? "About Book" : "Not Available to rent"}
           </button>
           <button
             type="button"
             className="flex items-center justify-center w-full p-3 font-semibold tracking-wide rounded-md dark:bg-violet-400 dark:text-gray-900"
             keyprop="reserve"
           >
-            Reserve
+            Add to Cart
           </button>
         </div>
       </div>

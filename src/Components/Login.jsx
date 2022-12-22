@@ -46,10 +46,10 @@ const Login = ({ firebaseapp, setUser, setCookie }) => {
   };
   return (
     <form
-      class="flex justify-center h-full w-full items-center"
+      class="flex justify-center h-full w-full md:min-w-[600px] items-center mt-5"
       onSubmit={handleSubmit}
     >
-      <div class="w-full md:w-1/2 flex flex-col items-center ">
+      <div class="w-full md:w-1/2 flex flex-col items-center md:min-w-[400px] ">
         <h1 class="text-center text-2xl font-bold text-gray-600 mb-6">Login</h1>
         <div class="w-3/4 mb-6">
           <input
