@@ -232,7 +232,14 @@ const AboutUserform = () => {
             </div>
           </div>
         </fieldset>
-        {editable ? (
+        {!editable ? (
+          <button
+            className="px-2 py-1 bg-green-600 rounded-lg text-white my-4"
+            type="submit"
+          >
+            Update Profile
+          </button>
+        ) : (
           <button
             className="px-2 py-1 bg-blue-600 rounded-lg text-white my-4"
             onClick={() => {
@@ -242,13 +249,6 @@ const AboutUserform = () => {
           >
             {" "}
             Edit profile
-          </button>
-        ) : (
-          <button
-            className="px-2 py-1 bg-green-600 rounded-lg text-white my-4"
-            type="submit"
-          >
-            Update Profile
           </button>
         )}
       </form>
