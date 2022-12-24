@@ -26,6 +26,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [cookies, setCookie, removeCookie] = useCookies("firebaseAccessToken");
 
+
   return (
     <>
       {" "}

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 import {
     getFirestore,
@@ -11,29 +13,43 @@ import {
     addDoc,
     updateDoc,
 } from "firebase/firestore";
+import { auth } from "./firebase-config"
+import firebase from "firebase/compat/app";
 import { db } from "./firebase-config";
-import { Navigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
-const ViewBook = () => {
+function ViewBook() {
 
-    const user = getAuth().currentUser;
-    if (user == null)
-        Navigate("/login");
-    console.log(user.email);
-    console.log(user.uid);
-    const location = useLocation();
+    const navigate = useNavigate();
+    const [user, loading, error] = useAuthState(auth);
     const [book, setBook] = useState({});
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const location = useLocation();
 
-    const userLoansRef = collection(db, "User", user.uid, "loans");
+    const action = () => {
+        console.log(user.email);
+        console.log(user.uid);
 
+        const userLoansRef = collection(db, "User", user.uid, "loans");
 
+        setBook(location.state.book);
+        console.log(location.state.book);
+    };
     useEffect(() => {
-        let books = location.state.book;
-        setBook(books);
-        console.log(books);
-    }, []);
+        if (loading) {
+            console.log("loading");
+            return;
+        }
+        if (!user) {
+            console.log("not logged in");
+            return navigate("/login");
+        }
+        if (error) {
+            console.log("In use effect ", error);
+        }
+        action();
+
+    }, [user, loading]);
+
     return (
         <div className="flex items-center justify-center w-full">
             <div className=" bg-slate-300 flex flex-col items-center gap-8 py-5">
@@ -49,7 +65,7 @@ const ViewBook = () => {
                     }).then(() => {
                         console.log("reached then")
                         console.log(book.id);
-                        updateDoc(doc(db,"Book",book.id), {
+                        updateDoc(doc(db, "Book", book.id), {
                             isRerservable: false,
                         })
                         console.log("again reached then")
@@ -63,7 +79,6 @@ const ViewBook = () => {
             </div>
         </div>
     );
-
 };
 
 export default ViewBook;
