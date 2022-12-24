@@ -1,6 +1,12 @@
-
 import { db } from "./firebase-config";
-import { collection, getDocs, doc, setDoc, updateDoc, getDoc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  doc,
+  setDoc,
+  updateDoc,
+  getDoc,
+} from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { auth } from "./firebase-config";
@@ -21,11 +27,7 @@ const AboutUserform = () => {
   });
   const [editable, setEditable] = useState(true);
 
-
-
   const action = async () => {
-
-
     console.log(user.email);
     const userRef = doc(db, "User", user.uid, "Profile", "presentProfile");
     const userDoc = await getDoc(userRef)
@@ -40,22 +42,18 @@ const AboutUserform = () => {
             city: doc.data().city,
             state: doc.data().state,
             zip: doc.data().zip,
-          }))
-
-            .catch((error) => {
-              console.log("Error getting document:", error);
-            })
-        }
-        else {
+          })).catch((error) => {
+            console.log("Error getting document:", error);
+          });
+        } else {
           // doc.data() will be undefined in this case
           console.log("No such document!");
-
         }
       })
       .catch((error) => {
         console.log("Error getting document:", error);
       });
-  }
+  };
   useEffect(() => {
     if (loading) {
       console.log("loading");
@@ -75,7 +73,7 @@ const AboutUserform = () => {
     setState((prevState) => ({
       ...prevState,
       [name]: value,
-    }))
+    }));
   };
   const updateUserProfile = async (e) => {
     e.preventDefault();
@@ -91,21 +89,21 @@ const AboutUserform = () => {
         zip: state.zip,
       });
       console.log("Document written with ID: ", userRef.id);
+      setEditable(!editable);
     } catch (e) {
       console.error("Error adding document: ", e);
     }
-
-
-  }
+  };
   console.log("returning now");
-
 
   return (
     <div>
       <div>Hello</div>
-      <form class="w-full max-w-lg mt-5 my-5" onSubmit={updateUserProfile} >
+      <form class="w-full max-w-lg mt-5 my-5" onSubmit={updateUserProfile}>
         <fieldset disabled={editable}>
-          <h1 className="flex justify-center text-3xl p-5 font-semibold ">My Profile</h1>
+          <h1 className="flex justify-center text-3xl p-5 font-semibold ">
+            My Profile
+          </h1>
           <div class="flex flex-wrap -mx-3 mb-6">
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
               <label
@@ -142,7 +140,6 @@ const AboutUserform = () => {
                 name="lastName"
                 onChange={handleChange}
                 value={state.lastName}
-
               />
             </div>
           </div>
@@ -162,7 +159,6 @@ const AboutUserform = () => {
                 placeholder="House no/name,XYZ STREET"
                 onChange={handleChange}
                 value={state.Adress}
-
               />
               <p class="text-gray-600 text-xs italic">
                 Make it as long and as crazy as you'd like
@@ -185,7 +181,6 @@ const AboutUserform = () => {
                 name="city"
                 onChange={handleChange}
                 value={state.city}
-
               />
             </div>
             <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -203,7 +198,6 @@ const AboutUserform = () => {
                   value={state.state}
                   name="state"
                 >
-
                   <option>New Mexico</option>
                   <option>Missouri</option>
                   <option>Texas</option>
@@ -237,18 +231,29 @@ const AboutUserform = () => {
               />
             </div>
           </div>
-          <button type="submit" >Update Profile</button>
         </fieldset>
-        <button onClick={() => {
-          setEditable(false);
-        }}
-          disabled={!editable}
-        > Edit profile</button>
+        {editable ? (
+          <button
+            className="px-2 py-1 bg-blue-600 rounded-lg text-white my-4"
+            onClick={() => {
+              setEditable(false);
+            }}
+            disabled={!editable}
+          >
+            {" "}
+            Edit profile
+          </button>
+        ) : (
+          <button
+            className="px-2 py-1 bg-green-600 rounded-lg text-white my-4"
+            type="submit"
+          >
+            Update Profile
+          </button>
+        )}
       </form>
     </div>
   );
 };
-
-
 
 export default AboutUserform;
