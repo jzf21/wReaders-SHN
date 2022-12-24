@@ -3,19 +3,15 @@ import React, { useEffect, useState } from "react"
 import { auth } from "./firebase-config"
 import { useAuthState } from "react-firebase-hooks/auth";
 
+
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { db } from "./firebase-config";
 import { doc, addDoc, collection, setDoc, getDoc } from "firebase/firestore";
-
-
-
-
 
 const Signup = ({ firebaseapp, setUser, setCookie }) => {
   const navigate = useNavigate()
@@ -37,18 +33,18 @@ const Signup = ({ firebaseapp, setUser, setCookie }) => {
   }, [user, loading])
 
   const handleChange = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setState((prevState) => ({
       ...prevState,
       [name]: value,
-    }))
-  }
+    }));
+  };
   const handleUsernameChange = async (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setState((prevState) => ({
       ...prevState,
       [name]: value,
-    }))
+    }));
     if (value != "") {
       const ref = doc(db, "usernames", value);
       const docSnap = await getDoc(ref);
@@ -56,43 +52,46 @@ const Signup = ({ firebaseapp, setUser, setCookie }) => {
       setState((prevState) => ({
         ...prevState,
         canSubmit: isUsernameAvailable,
-      }))
-      if (!isUsernameAvailable)
-        console.log("Username already taken");
+      }));
+      if (!isUsernameAvailable) console.log("Username already taken");
     }
+  };
 
-  }
+
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    createUserWithEmailAndPassword(auth, state.email, state.password, state.username)
+    e.preventDefault();
+    createUserWithEmailAndPassword(
+      auth,
+      state.email,
+      state.password,
+      state.username
+    )
       .then((userCredential) => {
         // Signed in
-        setUser(userCredential.user)
-        console.log(userCredential.user)
+        setUser(userCredential.user);
+        console.log(userCredential.user);
         // const id = userCredential.user.uid + "";
         setDoc(doc(db, "User", userCredential.user.uid), {
           _id: userCredential.user.uid,
           email: userCredential.user.email,
-        })
+        });
         setDoc(doc(db, "usernames", state.username), {
           _id: userCredential.user.uid,
-        })
+        });
         setCookie("firebaseAccessToken", userCredential.user.accessToken, {
           path: "/",
-        })
-        navigate("/books")
+        });
+        navigate("/books");
         // ...
       })
       .catch((error) => {
-
         console.log("error");
         const errorCode = error.code;
         const errorMessage = error.message;
         // ..
       });
   };
-
 
   return (
     <form
@@ -112,6 +111,16 @@ const Signup = ({ firebaseapp, setUser, setCookie }) => {
             placeholder="Email"
             onChange={handleChange}
           />
+        </div>{" "}
+        <div class="w-3/4 mb-6">
+          <input
+            type="text"
+            name="username"
+            id="username"
+            class="w-full py-4 px-8 bg-slate-200 placeholder:font-semibold rounded hover:ring-1 outline-blue-500 "
+            placeholder="Username"
+            onChange={handleUsernameChange}
+          />
         </div>
         <div class="w-3/4 mb-6">
           <input
@@ -121,16 +130,6 @@ const Signup = ({ firebaseapp, setUser, setCookie }) => {
             class="w-full py-4 px-8 bg-slate-200 placeholder:font-semibold rounded hover:ring-1 outline-blue-500 "
             placeholder="Password"
             onChange={handleChange}
-          />
-        </div>
-        <div class="w-3/4 mb-6">
-          <input
-            type="text"
-            name="username"
-            id="username"
-            class="w-full py-4 px-8 bg-slate-200 placeholder:font-semibold rounded hover:ring-1 outline-blue-500 "
-            placeholder="Username"
-            onChange={handleUsernameChange}
           />
         </div>
         {/* <div class="w-3/4 flex flex-row justify-between">
@@ -158,7 +157,7 @@ const Signup = ({ firebaseapp, setUser, setCookie }) => {
         </div>
       </div>
     </form>
-  )
-}
+  );
+};
 
-export default Signup
+export default Signup;
