@@ -98,7 +98,6 @@ const AboutUserform = () => {
 
   return (
     <div>
-      <div>Hello</div>
       <form class="w-full max-w-lg mt-5 my-5" onSubmit={updateUserProfile}>
         <fieldset disabled={editable}>
           <h1 className="flex justify-center text-3xl p-5 font-semibold ">
@@ -232,25 +231,25 @@ const AboutUserform = () => {
             </div>
           </div>
         </fieldset>
-        {!editable ? (
-          <button
-            className="px-2 py-1 bg-green-600 rounded-lg text-white my-4"
-            type="submit"
-          >
-            Update Profile
-          </button>
-        ) : (
-          <button
-            className="px-2 py-1 bg-blue-600 rounded-lg text-white my-4"
-            onClick={() => {
-              setEditable(false);
-            }}
-            disabled={!editable}
-          >
-            {" "}
-            Edit profile
-          </button>
-        )}
+
+        <button
+          className="px-2 py-1 bg-blue-600 rounded-lg text-white my-4"
+          onClick={() => {
+            setEditable(false);
+          }}
+          disabled={!editable}
+        >
+          {" "}
+          Edit profile
+        </button>
+
+        <button
+          className="px-2 py-1 mx-3 bg-green-600 rounded-lg text-white my-4"
+          type="submit"
+          disabled={editable}
+        >
+          Update Profile
+        </button>
       </form>
     </div>
   );
