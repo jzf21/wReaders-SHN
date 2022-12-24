@@ -16,6 +16,7 @@ import React, { useEffect } from "react";
 const AboutUserform = () => {
   const navigate = useNavigate();
   const [user, loading, error] = useAuthState(auth);
+  const [sucess, setSucess] = useState("");
   const [state, setState] = useState({
     email: "",
     firstName: "",
@@ -89,6 +90,7 @@ const AboutUserform = () => {
         zip: state.zip,
       });
       console.log("Document written with ID: ", userRef.id);
+      setSucess("Profile Updated");
       setEditable(!editable);
     } catch (e) {
       console.error("Error adding document: ", e);
@@ -251,6 +253,7 @@ const AboutUserform = () => {
           Update Profile
         </button>
       </form>
+      {sucess && <p>Profile updated sucessfully</p>}
     </div>
   );
 };
