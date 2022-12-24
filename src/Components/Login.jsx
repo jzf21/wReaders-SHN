@@ -1,18 +1,41 @@
 import React, { useState } from "react";
 import {
+
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { useAuthState } from "react-firebase-hooks/auth"
+import { useEffect } from "react";
 // import AddDoc from "./AddDoc"
 
 const Login = ({ firebaseapp, setUser, setCookie }) => {
+  const auth = getAuth(firebaseapp);
+  const navigate = useNavigate();
+
   const [state, setState] = useState({
     email: "",
     password: "",
   });
-  const navigate = useNavigate();
+  const [loggedin, loading, error] = useAuthState(auth)
+  useEffect(() => {
+    if (loggedin) {
+      setUser(loggedin)
+      console.log(loggedin.email + " logged in")
+      navigate("/books");
+      return;
+    }
+    if (loading) {
+      console.log("loading")
+      return
+    }
+    if (error) {
+      console.log(error)
+    }
+
+  }, [loggedin, loading])
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,8 +44,6 @@ const Login = ({ firebaseapp, setUser, setCookie }) => {
       [name]: value,
     }));
   };
-
-  const auth = getAuth(firebaseapp);
 
   const handleSubmit = (e) => {
     e.preventDefault();

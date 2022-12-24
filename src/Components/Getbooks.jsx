@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { getAuth } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 import {
   getFirestore,
   collection,
@@ -25,6 +27,14 @@ const Getbooks = () => {
   const [showAdd, setShowAdd] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const navigate = useNavigate();
+  useEffect(() => {
+    const user = getAuth().currentUser;
+    if (!user) {
+      console.log("user not logged in");
+      navigate("/login");
+    }
+  }, []);
 
   const getBooks = async () => {
     setLoading(true);

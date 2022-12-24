@@ -1,11 +1,15 @@
+import { getAuth } from "firebase/auth";
 import React from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+
 const Sidebar = () => {
   const [cookies, setCookie, removeCookie] = useCookies("firebaseAccessToken");
   const navigate = useNavigate();
 
   const handleLogout = () => {
+    const auth = getAuth();
+    auth.signOut();
     removeCookie("firebaseAccessToken", {
       path: "/",
     });
