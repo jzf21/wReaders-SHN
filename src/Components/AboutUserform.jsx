@@ -13,7 +13,6 @@ import { auth } from "./firebase-config";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 import React, { useEffect } from "react";
-import { set } from "mongoose";
 const AboutUserform = () => {
   const navigate = useNavigate();
   const [user, loading, error] = useAuthState(auth);
