@@ -18,7 +18,7 @@ const Bookcard = ({ book }) => {
             <h2 className="text-3xl font-semibold tracking-wide">
               {book.title}
             </h2>
-            <p className="dark:text-gray-100">{book.authors}</p>
+            <p className="dark:text-gray-100">{book.authors.join(", ")}</p>
           </div>
           <button
             type="button"
