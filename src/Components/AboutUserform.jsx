@@ -7,6 +7,7 @@ import { auth } from "./firebase-config";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 import React, { useEffect } from "react";
+import { set } from "mongoose";
 const AboutUserform = () => {
   const navigate = useNavigate();
   const [user, loading, error] = useAuthState(auth);
@@ -19,7 +20,7 @@ const AboutUserform = () => {
     state: "",
     zip: "",
   });
-  const [editable, setEditable] = useState(true);
+  const [editable, setEditable] = useState(false);
 
 
 
@@ -79,7 +80,9 @@ const AboutUserform = () => {
   };
   const updateUserProfile = async (e) => {
     e.preventDefault();
+
     try {
+      setEditable(false);
       const userRef = doc(db, "User", user.uid, "Profile", "presentProfile");
       await setDoc(userRef, {
         email: state.email,
@@ -104,7 +107,7 @@ const AboutUserform = () => {
     <div>
       <div>Hello</div>
       <form class="w-full max-w-lg mt-5 my-5" onSubmit={updateUserProfile} >
-        <fieldset disabled={editable}>
+        <fieldset disabled={!editable}>
           <h1 className="flex justify-center text-3xl p-5 font-semibold ">My Profile</h1>
           <div class="flex flex-wrap -mx-3 mb-6">
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -237,12 +240,12 @@ const AboutUserform = () => {
               />
             </div>
           </div>
-          <button type="submit" >Update Profile</button>
+          <button type="submit">Update Profile</button>
         </fieldset>
         <button onClick={() => {
-          setEditable(false);
+          setEditable(true);
         }}
-          disabled={!editable}
+          disabled={editable}
         > Edit profile</button>
       </form>
     </div>
