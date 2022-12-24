@@ -16,7 +16,6 @@ import React, { useEffect } from "react";
 const AboutUserform = () => {
   const navigate = useNavigate();
   const [user, loading, error] = useAuthState(auth);
-  const [sucess, setSucess] = useState("");
   const [state, setState] = useState({
     email: "",
     firstName: "",
@@ -26,9 +25,13 @@ const AboutUserform = () => {
     state: "",
     zip: "",
   });
-  const [editable, setEditable] = useState(true);
+  const [editable, setEditable] = useState(false);
+
+
 
   const action = async () => {
+
+
     console.log(user.email);
     const userRef = doc(db, "User", user.uid, "Profile", "presentProfile");
     const userDoc = await getDoc(userRef)
@@ -43,18 +46,22 @@ const AboutUserform = () => {
             city: doc.data().city,
             state: doc.data().state,
             zip: doc.data().zip,
-          })).catch((error) => {
-            console.log("Error getting document:", error);
-          });
-        } else {
+          }))
+
+            .catch((error) => {
+              console.log("Error getting document:", error);
+            })
+        }
+        else {
           // doc.data() will be undefined in this case
           console.log("No such document!");
+
         }
       })
       .catch((error) => {
         console.log("Error getting document:", error);
       });
-  };
+  }
   useEffect(() => {
     if (loading) {
       console.log("loading");
@@ -74,11 +81,13 @@ const AboutUserform = () => {
     setState((prevState) => ({
       ...prevState,
       [name]: value,
-    }));
+    }))
   };
   const updateUserProfile = async (e) => {
     e.preventDefault();
+
     try {
+      setEditable(false);
       const userRef = doc(db, "User", user.uid, "Profile", "presentProfile");
       await setDoc(userRef, {
         email: state.email,
@@ -90,21 +99,29 @@ const AboutUserform = () => {
         zip: state.zip,
       });
       console.log("Document written with ID: ", userRef.id);
-      setSucess("Profile Updated");
-      setEditable(!editable);
     } catch (e) {
       console.error("Error adding document: ", e);
     }
-  };
-  console.log("returning now");
+
+
+  }
+  const EditUpdate = () => {
+    if (editable)
+      return (<button type="submit">Update Profile</button>)
+    return (<button onClick={() => {
+      setEditable(true);
+    }}
+      disabled={editable}
+    > Edit profile</button>)
+  }
+
 
   return (
     <div>
-      <form class="w-full max-w-lg mt-5 my-5" onSubmit={updateUserProfile}>
-        <fieldset disabled={editable}>
-          <h1 className="flex justify-center text-3xl p-5 font-semibold ">
-            My Profile
-          </h1>
+      <div>Hello</div>
+      <form class="w-full max-w-lg mt-5 my-5" onSubmit={updateUserProfile} >
+        <fieldset disabled={!editable}>
+          <h1 className="flex justify-center text-3xl p-5 font-semibold ">My Profile</h1>
           <div class="flex flex-wrap -mx-3 mb-6">
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
               <label
@@ -141,6 +158,7 @@ const AboutUserform = () => {
                 name="lastName"
                 onChange={handleChange}
                 value={state.lastName}
+
               />
             </div>
           </div>
@@ -160,6 +178,7 @@ const AboutUserform = () => {
                 placeholder="House no/name,XYZ STREET"
                 onChange={handleChange}
                 value={state.Adress}
+
               />
               <p class="text-gray-600 text-xs italic">
                 Make it as long and as crazy as you'd like
@@ -182,6 +201,7 @@ const AboutUserform = () => {
                 name="city"
                 onChange={handleChange}
                 value={state.city}
+
               />
             </div>
             <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -199,6 +219,7 @@ const AboutUserform = () => {
                   value={state.state}
                   name="state"
                 >
+
                   <option>New Mexico</option>
                   <option>Missouri</option>
                   <option>Texas</option>
@@ -233,27 +254,8 @@ const AboutUserform = () => {
             </div>
           </div>
         </fieldset>
-
-        <button
-          className="px-2 py-1 bg-blue-600 rounded-lg text-white my-4"
-          onClick={() => {
-            setEditable(false);
-          }}
-          disabled={!editable}
-        >
-          {" "}
-          Edit profile
-        </button>
-
-        <button
-          className="px-2 py-1 mx-3 bg-green-600 rounded-lg text-white my-4"
-          type="submit"
-          disabled={editable}
-        >
-          Update Profile
-        </button>
+        <EditUpdate />
       </form>
-      {sucess && <p>Profile updated sucessfully</p>}
     </div>
   );
 };

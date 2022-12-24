@@ -24,15 +24,16 @@ function ViewBook() {
     const [user, loading, error] = useAuthState(auth);
     const [book, setBook] = useState({});
     const location = useLocation();
+    const userLoansRef = collection(db, "User", user.uid, "loans");
+
 
     const action = () => {
         console.log(user.email);
         console.log(user.uid);
-
-        const userLoansRef = collection(db, "User", user.uid, "loans");
-
         setBook(location.state.book);
         console.log(location.state.book);
+
+
     };
     useEffect(() => {
         if (loading) {

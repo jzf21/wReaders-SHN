@@ -1,4 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react"
+
+import { auth } from "./firebase-config"
+import { useAuthState } from "react-firebase-hooks/auth";
+
 
 import {
   getAuth,
@@ -10,14 +14,23 @@ import { db } from "./firebase-config";
 import { doc, addDoc, collection, setDoc, getDoc } from "firebase/firestore";
 
 const Signup = ({ firebaseapp, setUser, setCookie }) => {
-  const navigate = useNavigate();
-
+  const navigate = useNavigate()
   const [state, setState] = useState({
     email: "",
     password: "",
     username: "",
     canSubmit: false,
-  });
+  })
+  const [user, loading, error] = useAuthState(auth);
+
+  useEffect(() => {
+    if (loading) {
+      return;
+    }
+    if (user) {
+      return navigate("/books")
+    }
+  }, [user, loading])
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -44,7 +57,7 @@ const Signup = ({ firebaseapp, setUser, setCookie }) => {
     }
   };
 
-  const auth = getAuth(firebaseapp);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
