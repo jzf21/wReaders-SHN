@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
+import { runTransaction } from "firebase/firestore";
 import {
     getFirestore,
     collection,
@@ -12,6 +13,7 @@ import {
     DocumentReference,
     addDoc,
     updateDoc,
+    getDoc,
 } from "firebase/firestore";
 import { auth } from "./firebase-config"
 import firebase from "firebase/compat/app";
@@ -24,15 +26,11 @@ function ViewBook() {
     const [user, loading, error] = useAuthState(auth);
     const [book, setBook] = useState({});
     const location = useLocation();
-    const userLoansRef = collection(db, "User", user.uid, "loans");
 
 
     const action = () => {
-        console.log(user.email);
-        console.log(user.uid);
-        setBook(location.state.book);
-        console.log(location.state.book);
 
+        setBook(location.state.book);
 
     };
     useEffect(() => {
@@ -60,20 +58,50 @@ function ViewBook() {
                 <p>Categories:{book.categories}</p>
                 <p className="w-[50%] hidden">{book.longDescription}</p>
 
-                <button className="bg-blue-800 px-2 rounded-lg" disabled={!book.isRerservable} onClick={() => {
-                    addDoc(userLoansRef, {
-                        _id: book.id,
-                    }).then(() => {
-                        console.log("reached then")
-                        console.log(book.id);
-                        updateDoc(doc(db, "Book", book.id), {
-                            isRerservable: false,
+                <button className="bg-blue-800 px-2 rounded-lg" disabled={!book.isRerservable} onClick={async () => {
+
+
+                    try {
+                        await runTransaction(db, async (transaction) => {
+                            const docRef = doc(db, "Book", book.id);
+                            const docSnap = await transaction.get(docRef);
+                            const userLoansRef = collection(db, "User", user.uid, "loans");
+
+                            if (!docSnap.exists()) {
+                                throw "Document does not exist!";
+                            }
+                            const reservable = docSnap.data().isRerservable;
+                            const newDocref = doc(userLoansRef,);
+
+                            if (reservable) {
+                                transaction.set(newDocref, {
+                                    _id: book.id,
+                                })
+
+
+                                transaction.update(docRef, { isRerservable: false });
+
+                                console.log("book id at then", book.id);
+                                console.log("book reserved",)
+
+
+
+                            }
+                            else {
+                                console.log("book not reserved")
+                                
+                            }
+
                         })
-                        console.log("again reached then")
-                    })
-                        .catch((err) => {
-                            console.log("didnt add doc" + err);
-                        });
+
+
+
+
+
+                    }
+                    catch (err) {
+                        console.log("Transaction failed: ", err);
+                    }
                 }}>
                     Rent
                 </button>
