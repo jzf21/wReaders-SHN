@@ -147,6 +147,7 @@ function ViewBook() {
                                 }
                                 else if (reservable) {
 
+
                                     transaction.set(newDocref, {
                                         userid: user.uid,
                                         _id: book.id,
@@ -155,7 +156,7 @@ function ViewBook() {
                                         planName: planName,
                                         planDays: planDays,
                                         planPrice: planPrice,
-                                        returnDate: new Date().setDate(today + planDays),  //check
+                                        returnDate: new Date(new Date().getTime() + planDays * 24 * 60 * 60 * 1000).toString(),
                                         status: "booked",
                                     })
                                     transaction.update(userRef, {

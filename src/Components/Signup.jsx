@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 
 import { auth } from "./firebase-config"
 import { useAuthState } from "react-firebase-hooks/auth";
+import firebase from "firebase/compat";
 
 
 import {
@@ -14,7 +15,6 @@ import { db } from "./firebase-config";
 import { doc, addDoc, collection, setDoc, getDoc, getDocs, updateDoc } from "firebase/firestore";
 
 const Signup = ({ firebaseapp, setUser, setCookie }) => {
-
 
   const navigate = useNavigate()
   const [state, setState] = useState({
@@ -78,6 +78,7 @@ const Signup = ({ firebaseapp, setUser, setCookie }) => {
         setDoc(doc(db, "User", userCredential.user.uid), {
           _id: userCredential.user.uid,
           email: userCredential.user.email,
+          score: 20000,
         });
         setDoc(doc(db, "usernames", state.username), {
           _id: userCredential.user.uid,
