@@ -111,7 +111,9 @@ const Getbooks = () => {
         {search(books)
           .slice(0)
           .map((book) => {
-            return <Bookcard book={book} />;
+            return <Bookcard
+              key={book.id}
+              book={book} />;
           })}
       </div>
     </div>

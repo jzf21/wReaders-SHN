@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 
 import { auth } from "./firebase-config"
 import { useAuthState } from "react-firebase-hooks/auth";
+import firebase from "firebase/compat";
 
 
 import {
@@ -11,9 +12,10 @@ import {
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { db } from "./firebase-config";
-import { doc, addDoc, collection, setDoc, getDoc } from "firebase/firestore";
+import { doc, addDoc, collection, setDoc, getDoc, getDocs, updateDoc } from "firebase/firestore";
 
 const Signup = ({ firebaseapp, setUser, setCookie }) => {
+
   const navigate = useNavigate()
   const [state, setState] = useState({
     email: "",
@@ -69,12 +71,14 @@ const Signup = ({ firebaseapp, setUser, setCookie }) => {
     )
       .then((userCredential) => {
         // Signed in
+        console.log("credential user", userCredential.user);
         setUser(userCredential.user);
         console.log(userCredential.user);
         // const id = userCredential.user.uid + "";
         setDoc(doc(db, "User", userCredential.user.uid), {
           _id: userCredential.user.uid,
           email: userCredential.user.email,
+          score: 20000,
         });
         setDoc(doc(db, "usernames", state.username), {
           _id: userCredential.user.uid,
