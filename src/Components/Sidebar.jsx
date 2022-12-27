@@ -1,20 +1,57 @@
 import { getAuth } from "firebase/auth";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import { auth } from "./firebase-config";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { db } from "./firebase-config";
+import { doc, getDoc } from "firebase/firestore";
+import { async } from "@firebase/util";
+
 
 const Sidebar = () => {
   const [cookies, setCookie, removeCookie] = useCookies("firebaseAccessToken");
+  const [user, loading, error] = useAuthState(auth);
+  const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    const auth = getAuth();
     auth.signOut();
     removeCookie("firebaseAccessToken", {
       path: "/",
     });
     navigate("/login");
   };
+  useEffect(() => {
+    if (loading) {
+      return;
+    }
+    if (user) {
+      setLoggedIn(true);
+    }
+  }, [user, loading]);
+
+  const ScoreView = () => {
+    const [score, setScore] = useState(0);
+    useEffect(() => {
+      const loggedInUser = auth.currentUser;
+      if (!loggedInUser) return;
+      const getScore = async () => {
+        const ref = doc(db, "User", user.uid);
+        const docSnap = await getDoc(ref);
+        if (docSnap.exists()) {
+          setScore(docSnap.data().score);
+        }
+      };
+      getScore();
+    }, [user]);
+
+    return (
+      <p>
+        Points -{score}
+      </p>
+    )
+  }
 
   return (
     <div>
@@ -91,7 +128,7 @@ const Sidebar = () => {
                   fill="currentColor"
                   viewBox="0 0 20 20"
                   xmlns="http://www.w3.org/2000/svg"
-                  
+
                 >
                   <path
                     fill-rule="evenodd"
@@ -165,6 +202,7 @@ const Sidebar = () => {
                 <span class="flex-1 ml-3 whitespace-nowrap">Sign Up</span>
               </a>
             </li> */}
+            <ScoreView />
             <li onClick={handleLogout}>
               <a
                 href="#"
@@ -183,6 +221,7 @@ const Sidebar = () => {
                     clip-rule="evenodd"
                   ></path>
                 </svg>
+
                 <span class="flex-1 ml-3 whitespace-nowrap">Logout</span>
               </a>
             </li>
