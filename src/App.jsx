@@ -16,7 +16,7 @@ import Signup from "./Components/Signup";
 import Login from "./Components/Login";
 import { useState } from "react";
 import Getbooks from "./Components/Getbooks";
-import Search from "./Components/Search";
+import Mybooks from "./Components/Mybooks";
 
 import { useCookies } from "react-cookie";
 import Bottomnav from "./Components/Bottomnav";
@@ -63,6 +63,7 @@ function App() {
               <Route path="/books" element={<Getbooks />} />
               <Route path="/view-book" element={<ViewBook />} />
               <Route path="/myprofile" element={<AboutUserform />} />
+              <Route path="/my-loans" element={<Mybooks />} />
             </Routes>
           </div>
         </div>
