@@ -19,7 +19,7 @@ const AddDoc = () => {
       status: "PUBLISH",
       authors: ["W. Frank Ableson", "Charlie Collins", "Robi Sen"],
       categories: ["Open Source", "Mobile"],
-      isRerservable: true
+      isReservable: true
     },
     {
       _id: 2,
@@ -36,7 +36,7 @@ const AddDoc = () => {
       status: "PUBLISH",
       authors: ["W. Frank Ableson", "Robi Sen"],
       categories: ["Java"],
-      isRerservable: true
+      isReservable: true
     },
     {
       _id: 3,
@@ -49,7 +49,7 @@ const AddDoc = () => {
       status: "PUBLISH",
       authors: ["Gojko Adzic"],
       categories: ["Software Engineering"],
-      isRerservable: true
+      isReservable: true
     },
     {
       _id: 4,
@@ -64,7 +64,7 @@ const AddDoc = () => {
       status: "PUBLISH",
       authors: ["Tariq Ahmed with Jon Hirschi", "Faisal Abid"],
       categories: ["Internet"],
-      isRerservable: true
+      isReservable: true
     },
     {
       _id: 5,
@@ -79,7 +79,7 @@ const AddDoc = () => {
       status: "PUBLISH",
       authors: ["Tariq Ahmed", "Dan Orlando", "John C. Bland II", "Joel Hooks"],
       categories: ["Internet"],
-      isRerservable: true
+      isReservable: true
     },
     {
       _id: 6,
@@ -94,7 +94,7 @@ const AddDoc = () => {
       status: "PUBLISH",
       authors: ["Satnam Alag"],
       categories: ["Internet"],
-      isRerservable: true
+      isReservable: true
     },
     {
       _id: 7,
@@ -111,7 +111,7 @@ const AddDoc = () => {
       status: "PUBLISH",
       authors: ["Rob Allen", "Nick Lo", "Steven Brown"],
       categories: ["Web Development"],
-      isRerservable: true
+      isReservable: true
     },
     {
       _id: 8,
@@ -128,7 +128,7 @@ const AddDoc = () => {
       status: "PUBLISH",
       authors: ["Bernerd Allmon", "Jeremy Anderson"],
       categories: ["Internet"],
-      isRerservable: true
+      isReservable: true
     },
     {
       _id: 9,
@@ -145,7 +145,7 @@ const AddDoc = () => {
       status: "PUBLISH",
       authors: ["Andres Almiray", "Danno Ferrin", "", "James Shingler"],
       categories: ["Java"],
-      isRerservable: true
+      isReservable: true
     },
     {
       _id: 10,
@@ -162,7 +162,7 @@ const AddDoc = () => {
       status: "PUBLISH",
       authors: ["Alexandre de Castro Alves"],
       categories: ["Java"],
-      isRerservable: true
+      isReservable: true
     },
   ];
   const docRef = collection(db, "Book");

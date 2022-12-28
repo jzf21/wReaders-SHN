@@ -24,13 +24,13 @@ const Bookcard = ({ book }) => {
             type="button"
             className="flex items-center justify-center w-full p-3 font-semibold tracking-wide rounded-md dark:bg-violet-400 dark:text-gray-900"
             keyProp="rent"
-            disabled={!book.isRerservable}
+            disabled={!book.isReservable}
             onClick={() => {
               navigate("/view-book", { state: { book: book, id: book.id } });
               console.log("clicked");
             }}
           >
-            {book.isRerservable ? "About Book" : "Not Available to rent"}
+            {book.isReservable ? "About Book" : "Not Available to rent"}
           </button>
           <button
             type="button"

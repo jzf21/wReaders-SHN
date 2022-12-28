@@ -126,7 +126,7 @@ function ViewBook() {
                 <p className="w-[50%] hidden">{book.longDescription}</p>
                 <RentPlans />
                 <button className="bg-blue-800 px-2 rounded-lg text-white hover:bg-blue-700 "
-                    disabled={!book.isRerservable}
+                    disabled={!book.isReservable}
                     onClick={async () => {
                         try {
                             await runTransaction(db, async (transaction) => {
@@ -136,7 +136,7 @@ function ViewBook() {
                                 const userLoansRef = collection(userRef, "loans");
                                 const userSnap = await transaction.get(userRef);
                                 const currentscore = userSnap.data().score;
-                                const reservable = docSnap.data().isRerservable;
+                                const reservable = docSnap.data().isReservable;
                                 const newDocref = doc(userLoansRef,);
 
                                 if (!docSnap.exists()) {
@@ -150,13 +150,14 @@ function ViewBook() {
 
                                     transaction.set(newDocref, {
                                         userid: user.uid,
-                                        _id: book.id,
+                                        bookId: book.id,
                                         title: book.title,
                                         plan: planId,
                                         planName: planName,
                                         planDays: planDays,
                                         planPrice: planPrice,
-                                        returnDate: new Date(new Date().getTime() + planDays * 24 * 60 * 60 * 1000).toString(),
+                                        thumbnailUrl: book.thumbnailUrl,
+                                        returnDate: new Date(new Date().getTime() + planDays * 24 * 60 * 60 * 1000),
                                         status: "booked",
                                     })
                                     transaction.update(userRef, {
@@ -165,7 +166,7 @@ function ViewBook() {
 
 
                                     transaction.update(docRef, {
-                                        isRerservable: false,
+                                        isReservable: false,
                                     });
 
                                     console.log("New loan created")
