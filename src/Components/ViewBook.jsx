@@ -77,7 +77,7 @@ function ViewBook() {
             if (!user) {
                 console.log("user or book not found")
                 return;
-            } console.log("useEffect in getPlans")
+            } console.log("book id ", book.id);
             getPlans();
         }, [user, book]);
 
@@ -123,68 +123,76 @@ function ViewBook() {
                     disabled={!book.isReservable}
                     onClick={async () => {
                         try {
-                            await runTransaction(db, async (transaction) => {
-                                const docRef = doc(db, "Book", book.id);
+                            let success = false;
+                            const modelRef = doc(db, "Book", book.id);
+                            const stockref = collection(db, "Book", book.id, "stock");
+                            const stockSnap = await getDocs(stockref).then((querySnapshot) => {
+                                querySnapshot.forEach(async (item) => {
+                                    console.log("Entering transaction")
+                                    if (success) return;
+                                    await runTransaction(db, async (transaction) => {
+                                        const docRef = item.ref;
+                                        const docSnap = await transaction.get(docRef);
+                                        const userRef = doc(db, "User", user.uid);
+                                        const userLoansRef = collection(userRef, "loans");
+                                        const userSnap = await transaction.get(userRef);
+                                        const currentscore = userSnap.data().score;
+                                        const reservable = docSnap.data().isReservable;
+                                        const newDocref = doc(userLoansRef,);
 
-                                const stockRef =doc(docRef,"stock");
-                                 
-                                const docSnap = await transaction.get(docRef);
-                                const userRef = doc(db, "User", user.uid);
-                                const userLoansRef = collection(userRef, "loans");
-                                const userSnap = await transaction.get(userRef);
-                                const currentscore = userSnap.data().score;
-                                const reservable = docSnap.data().isReservable;
-                                const newDocref = doc(userLoansRef,);
-                                                
-                            
-
-                                if (!docSnap.exists()) {
-                                    throw "Document does not exist!";
-                                }
-                                if (currentscore < planPrice) {
-                                    throw "Insufficient Balance";
-                                }
-                                else if (reservable) {
+                                        if (!reservable) {
+                                            throw "Item not available";
+                                        }
+                                        if (currentscore < planPrice) {
+                                            throw "Insufficient Balance";
+                                        }
+                                        else if (reservable) {
 
 
-                                    transaction.set(newDocref, {
-                                        userid: user.uid,
-                                        bookId: book.id,
-                                        title: book.title,
-                                        plan: planId,
-                                        planName: planName,
-                                        planDays: planDays,
-                                        planPrice: planPrice,
-                                        thumbnailUrl: book.thumbnailUrl,
-                                        returnDate: new Date(new Date().getTime() + planDays * 24 * 60 * 60 * 1000),
-                                        status: "booked",
+                                            transaction.set(newDocref, {
+                                                userid: user.uid,
+                                                modelId: book.id,
+                                                itemId: item.id,
+                                                title: book.title,
+                                                plan: planId,
+                                                planName: planName,
+                                                planDays: planDays,
+                                                planPrice: planPrice,
+                                                thumbnailUrl: book.thumbnailUrl,
+                                                returnDate: new Date(new Date().getTime() + planDays * 24 * 60 * 60 * 1000),
+                                                status: "requested",
+                                            })
+                                            transaction.update(userRef, {
+                                                score: currentscore - planPrice,
+                                            });
+
+
+                                            transaction.update(docRef, {
+                                                isReservable: false,
+                                            });
+                                            transaction.set(modelRef, {
+                                                stock: docSnap.data().stock - 1,
+                                            }, { merge: true });
+
+                                            success = true;
+                                            console.log("New loan created");
+
+
+
+                                        }
+                                        else {
+                                            console.log("book not reserved")
+
+                                        }
+
                                     })
-                                    transaction.update(userRef, {
-                                        score: currentscore - planPrice,
-                                    });
 
-
-                                    transaction.update(docRef, {
-                                        isReservable: false,
-                                    });
-
-                                    console.log("New loan created")
-
-
-
-                                }
-                                else {
-                                    console.log("book not reserved")
-
-                                }
-
+                                })
                             })
-
-
-
-
-
                         }
+
+
+
                         catch (err) {
                             console.log("Transaction failed: ", err);
                         }

@@ -68,17 +68,19 @@ const Mybooks = () => {
                 console.log("in catch ", e);
             })
     }
-    const returnBook = async (loanId, bookId) => {
+    const returnBook = async (loanId, bookId, itemId) => {
         console.log("returning book", loanId, bookId);
         const userRef = doc(db, "User", user.uid);
         const userLoanRef = doc(userRef, "loans", loanId);
         const userReturnedRef = doc(userRef, "returnedLoans", loanId);
-        const bookref = doc(db, "Book", bookId);
+        const bookRef = doc(db, "Book", bookId);
+        const itemRef = doc(bookRef, "stock", itemId);
 
         console.log("Entering transaction")
         await runTransaction(db, async (transaction) => {
             const userLoanSnap = await transaction.get(userLoanRef);
-            const bookSnap = await transaction.get(bookref);
+
+            const bookSnap = await transaction.get(itemRef);
 
             transaction.delete(userLoanRef);
             transaction.set(userReturnedRef, userLoanSnap.data());
@@ -88,10 +90,14 @@ const Mybooks = () => {
             }
             )
 
-            transaction.update(bookref, {
-                // availableCopies: bookSnap.data().availableCopies + 1,
-                isReservable: true
+            transaction.update(bookRef, {
+                availableCopies: bookSnap.data().availableCopies + 1,
             });
+            transaction.update(itemRef, {
+                isReservable: true,
+            }
+
+            )
         }).then(() => {
             console.log("Transaction successfully committed!");
         }).catch((error) => {
@@ -102,7 +108,7 @@ const Mybooks = () => {
 
     const Zdate = (date) => {
 
-        
+
         if (date) {
             console.log(date);
             const dateh = new Date(date);
@@ -145,7 +151,7 @@ const Mybooks = () => {
                                     {/* <p class="text-gray-600">Issued On :{book.issueDate}</p> */}
                                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                                         onClick={() => {
-                                            returnBook(book.id, book.bookId)
+                                            returnBook(book.id, book.modelId, book.itemId)
                                         }}>
 
                                         Return
