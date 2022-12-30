@@ -14,6 +14,7 @@ import {
   where,
   doc,
   DocumentReference,
+  orderBy,
 } from "firebase/firestore";
 import { db } from "./firebase-config";
 import Bookcard from "./bookcard";
@@ -46,14 +47,25 @@ const Getbooks = () => {
   const getBooks = async () => {
 
     try {
-      const querySnapshot = await getDocs(collection(db, "Book"));
+      const collectionRef = collection(db, "Book");
+      //order collectionRef by title in ascending order
+      const q = query(collectionRef, orderBy("isReservable", "desc"), orderBy("title", "asc"));
+      const querySnapshot = await getDocs(q);
       const books = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
-      setBooks(books);
+
+      const Ubooks = books.reduce((acc, book) => {
+        //reduce to only books that have unique title
+        if (!acc.some((b) => b.title === book.title)) {
+          acc.push(book);
+        }
+        return acc;
+      }, []);
+      setBooks(Ubooks);
     } catch (error) {
-      setError(error);
+      console.log(error);
     }
   };
 
