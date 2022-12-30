@@ -7,7 +7,7 @@ const Bookcard = ({ book }) => {
 
   return (
     <>
-      <div className="max-w-xs rounded-md shadow-md dark:bg-gray-900 dark:text-gray-100">
+      <div className="max-w-xs hover:scale-110 rounded-md shadow-md dark:bg-gray-900 dark:text-gray-100 hover:scale-110 ">
         <img
           src={book.thumbnailUrl}
           alt=""
