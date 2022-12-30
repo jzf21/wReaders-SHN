@@ -33,12 +33,6 @@ function ViewBook() {
     const [planPrice, setPlanPrice] = useState(0);
     const location = useLocation();
 
-
-    const action = () => {
-
-
-
-    };
     useEffect(() => {
         if (loading) {
             console.log("loading");
@@ -131,6 +125,9 @@ function ViewBook() {
                         try {
                             await runTransaction(db, async (transaction) => {
                                 const docRef = doc(db, "Book", book.id);
+
+                                const stockRef =doc(docRef,"stock");
+                                 
                                 const docSnap = await transaction.get(docRef);
                                 const userRef = doc(db, "User", user.uid);
                                 const userLoansRef = collection(userRef, "loans");
@@ -138,6 +135,8 @@ function ViewBook() {
                                 const currentscore = userSnap.data().score;
                                 const reservable = docSnap.data().isReservable;
                                 const newDocref = doc(userLoansRef,);
+                                                
+                            
 
                                 if (!docSnap.exists()) {
                                     throw "Document does not exist!";

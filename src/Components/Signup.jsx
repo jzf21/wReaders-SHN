@@ -24,6 +24,7 @@ const Signup = ({ firebaseapp, setUser, setCookie }) => {
     canSubmit: false,
   })
   const [user, loading, error] = useAuthState(auth);
+  const [nameError, setNameError] = useState(false);
 
   useEffect(() => {
     if (loading) {
@@ -55,7 +56,10 @@ const Signup = ({ firebaseapp, setUser, setCookie }) => {
         ...prevState,
         canSubmit: isUsernameAvailable,
       }));
-      if (!isUsernameAvailable) console.log("Username already taken");
+      if (!isUsernameAvailable) {
+        console.log("Username already taken");
+        setNameError(true);
+      }
     }
   };
 
@@ -108,6 +112,7 @@ const Signup = ({ firebaseapp, setUser, setCookie }) => {
         </h1>
         <div class="w-3/4 mb-6">
           <input
+            required="true"
             type="email"
             name="email"
             id="email"
@@ -118,6 +123,7 @@ const Signup = ({ firebaseapp, setUser, setCookie }) => {
         </div>{" "}
         <div class="w-3/4 mb-6">
           <input
+            required="true"
             type="text"
             name="username"
             id="username"
@@ -128,6 +134,7 @@ const Signup = ({ firebaseapp, setUser, setCookie }) => {
         </div>
         <div class="w-3/4 mb-6">
           <input
+            required="true"
             type="password"
             name="password"
             id="password"
@@ -149,6 +156,7 @@ const Signup = ({ firebaseapp, setUser, setCookie }) => {
             </a>
           </div>
         </div> */}
+        {nameError && <span className="text-red-500">Username already taken</span>}
         <div class="w-3/4 mt-4">
           <button
             type="submit"

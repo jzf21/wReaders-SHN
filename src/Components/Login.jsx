@@ -77,6 +77,7 @@ const Login = ({ firebaseapp, setUser, setCookie }) => {
             type="email"
             name="email"
             id="email"
+            required
             class="w-full py-4 px-8 bg-slate-200 placeholder:font-semibold rounded hover:ring-1 outline-blue-500"
             placeholder="Email"
             onChange={handleChange}
@@ -88,6 +89,7 @@ const Login = ({ firebaseapp, setUser, setCookie }) => {
             type="password"
             name="password"
             id="password"
+            required
             class="w-full py-4 px-8 bg-slate-200 placeholder:font-semibold rounded hover:ring-1 outline-blue-500 "
             placeholder="Password"
             onChange={handleChange}
@@ -103,6 +105,11 @@ const Login = ({ firebaseapp, setUser, setCookie }) => {
           <div>
             <a href="#" class="text-sm text-slate-400 hover:text-blue-500">
               Forgot?
+            </a>
+          </div>
+          <div>
+            <a href="/" class="text-sm text-slate-400 hover:text-blue-500">
+              Create an account
             </a>
           </div>
         </div>
