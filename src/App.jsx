@@ -2,6 +2,7 @@ import "./App.scss";
 import Bookcard from "./Components/bookcard";
 import Sidebar from "./Components/Sidebar";
 import ViewBook from "./Components/ViewBook";
+import DonateBook from "./Components/DonateBook";
 import {
   BrowserRouter as Router,
   Routes,
@@ -64,6 +65,8 @@ function App() {
               <Route path="/view-book" element={<ViewBook />} />
               <Route path="/myprofile" element={<AboutUserform />} />
               <Route path="/my-loans" element={<Mybooks />} />
+              <Route path="/donate-book" element={<DonateBook />} />
+
             </Routes>
           </div>
         </div>
