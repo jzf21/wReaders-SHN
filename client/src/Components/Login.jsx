@@ -21,11 +21,16 @@ const Login = ({ firebaseapp, setUser, setCookie }) => {
     password: "",
   });
   const [loggedin, loading, error] = useAuthState(auth)
-  const [laggedin, setLaggedin] = useState(false);
   useEffect(() => {
    
-    if (loading || laggedin) {
+    if (loading ) {
       console.log("loading")
+      return
+    }
+
+    if(!loggedin) {
+      console.log("not logged in")
+      navigate("/login")
       return
     }
     
@@ -46,7 +51,7 @@ const Login = ({ firebaseapp, setUser, setCookie }) => {
       console.log(error)
     }
 
-  }, [loggedin, loading,laggedin])
+  }, [loggedin, loading])
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -68,12 +73,7 @@ const Login = ({ firebaseapp, setUser, setCookie }) => {
         setCookie("firebaseAccessToken", userCredential.user.accessToken, {
           path: "/",
         });
-        if (userCredential.user.displayName.profileType == "Volunteer") {
-          console.log("volunteer");
-          navigate("/volunteer");
-        } else {  
-        navigate("/books");
-        }
+        
 
         // ...
       })

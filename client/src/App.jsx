@@ -67,7 +67,7 @@ function App() {
               <Route path="/myprofile" element={<AboutUserform />} />
               <Route path="/my-loans" element={<Mybooks />} />
               <Route path="/donate-book" element={<DonateBook />} />
-              <Route path="/volunteer" element={<h1>Volunteer</h1>} />
+              <Route path="/volunteer" element={<Volunteer/>} />
 
             </Routes>
           </div>

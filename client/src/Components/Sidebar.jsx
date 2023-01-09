@@ -16,6 +16,7 @@ const Sidebar = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [cRents, setCRents] = useState(0);
   const [score, setScore] = useState(0);
+  const [claim, setClaim] = useState("");
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -34,13 +35,22 @@ const Sidebar = () => {
         setLoggedIn(true);
         const fetchData = async () => {
           const ref = doc(db, "User", user.uid);
+          async function fetchClaim ()
+          {
+
+              await user.getIdTokenResult().then((idTokenResult) => {
+              setClaim(idTokenResult.claims['profileType']);
+            });
+          }
+          {
+            fetchClaim();
           const docSnap = await getDoc(ref);
           if (docSnap.exists()) {
             setScore(docSnap.data().score);
             console.log(docSnap.data().score);
             setCRents(docSnap.data().cRents);
             console.log(docSnap.data().cRents);
-          }
+          }}
         };
         fetchData();
       }
