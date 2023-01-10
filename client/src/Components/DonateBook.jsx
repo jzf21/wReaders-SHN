@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 const DonateBook = () =>
 {
-    const [display , setDisplay] = useState(false);
+    const navigate = useNavigate();
     const [user, loading, error] = useAuthState(auth);
     const [bookloading, setBookLoading] = useState(false);
     const [q, setQ] = useState("");
@@ -70,12 +70,11 @@ const DonateBook = () =>
         }
         if(!user)
         {
-            const navigate = useNavigate();
             return navigate("/login");
         }
     }, [loading, user,bookloading]);
     const BookOptions = ({book}) =>
-{
+    {
     console.log(book);
     return (
         <div> 

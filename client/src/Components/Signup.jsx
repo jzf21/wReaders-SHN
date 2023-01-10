@@ -21,6 +21,7 @@ const Signup = ({ firebaseapp, setUser, setCookie }) => {
 
 
   const navigate = useNavigate()
+  const [profileType , setProfileType] = useState("");
   const [state, setState] = useState({
     email: "",
     password: "",
@@ -40,16 +41,17 @@ const Signup = ({ firebaseapp, setUser, setCookie }) => {
         const profileType = await user.getIdTokenResult().then((idTokenResult) => {
           return idTokenResult.claims['profileType'];
         });
-        return profileType;
+        if (profileType == "Volunteer") {
+          navigate("/volunteer");
+        } else {
+          navigate("/books");
+        }
+      }
+      type();
       }
 
       
-      if (profileType == "Volunteer") {
-        navigate("/volunteer");
-      } else {
-        navigate("/books");
-      }
-    }
+     
   }, [user, loading])
 
   const handleChange = (e) => {
