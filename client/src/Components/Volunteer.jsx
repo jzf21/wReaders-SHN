@@ -23,7 +23,7 @@ const Volunteer = () => {
         {
             console.log("logged in")
             user.getIdTokenResult().then((idTokenResult) => {
-                if(idTokenResult.claims['profileType'] === "Volunteer")
+                if(idTokenResult.claims['profileType'] != "Volunteer")
                 {
                     return navigate('/books')
                 }

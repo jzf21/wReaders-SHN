@@ -4,6 +4,7 @@ import Sidebar from "./Components/Sidebar";
 import ViewBook from "./Components/ViewBook";
 import DonateBook from "./Components/DonateBook";
 import Volunteer from "./Components/Volunteer";
+import ViewDonations from "./Components/ViewDonations";
 import {
   BrowserRouter as Router,
   Routes,
@@ -68,6 +69,7 @@ function App() {
               <Route path="/my-loans" element={<Mybooks />} />
               <Route path="/donate-book" element={<DonateBook />} />
               <Route path="/volunteer" element={<Volunteer/>} />
+              <Route path="/volunteer/view-donations" element={<ViewDonations/>} />
 
             </Routes>
           </div>
