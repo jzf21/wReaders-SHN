@@ -21,12 +21,8 @@ import Bookcard from "./bookcard";
 
 const Getbooks = () => {
   const [books, setBooks] = useState([]);
-  const [filteredBooks, setFilteredBooks] = useState([]);
-  const [showFiltered, setShowFiltered] = useState(false);
-  const [showAll, setShowAll] = useState(true);
-  const [showAdd, setShowAdd] = useState(false);
-  const [showEdit, setShowEdit] = useState(false);
-  const [showDelete, setShowDelete] = useState(false);
+  const [genre, setGenre] = useState([]);
+  const [selectedGenre, setSelectedGenre] = useState([]);
   const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
   useEffect(() => {
@@ -38,14 +34,39 @@ const Getbooks = () => {
       console.log("user not logged in");
       navigate("/login");
     }
-    if (user)
-      getBooks();
 
-  }, [user, loading]);
+    if(selectedGenre.length === 0)  
+     {
+      getBooks();
+    }
+    else {
+      const bookref = query(collection(db,"Book"),where("categories","array-contains-any",selectedGenre));
+      const bookshot = getDocs(bookref);
+      bookshot.then((querySnapshot) => {
+        const books = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setBooks(books);
+      }
+      );
+
+    }
+
+    
+
+  }, [user, loading,selectedGenre]);
 
   const getBooks = async () => {
 
     try {
+      const genreRef = doc(db ,"genre", "genre");
+      const genreSnap = await getDoc(genreRef);
+      if (genreSnap.exists()) {
+        setGenre(genreSnap.data().genre);
+      } else {
+        console.log("No such genre!");
+      }
       const collectionRef = collection(db, "Book");
       //order collectionRef by title in ascending order
       const q = query(collectionRef, orderBy("isReservable", "desc"), orderBy("title", "asc"));
@@ -72,10 +93,45 @@ const Getbooks = () => {
     });
   }
 
+  const ShowGenre = ()=>
+  {
+    return(
+      <div class="flex flex-wrap -mx-4">
+        {
+          genre.map((item) => (
+            <div className="w-1/4 px-4 mb-8">
+            <div className="bg-gray-100 rounded-lg shadow-md p-2 text-center">
+              <label for={item} className="text-2xl font-medium mb-2 text-indigo-600">{item}</label>
+              <input type="checkbox" 
+              checked={selectedGenre.includes(item)} // when SELECTED THIS function is called and the value is added to the array
+              onChange={(e) =>
+                 {
+                e.preventDefault();
+                 e.target.checked ? setSelectedGenre((prevState)=>[...prevState, e.target.value])
+                  : setSelectedGenre((prevState)=>prevState.filter((item)=>item!==e.target.value))// when DESELECTED THIS function is called and the value is removed from the array 
+                 }
+                }
+              when deselected
+              
+              value = {item} 
+              name = {item}
+              className="text-2xl font-medium mb-2 text-indigo-600"/>
+            </div>
+          </div>
+          ))
+
+        }
+     
+            </div>
+        
+      )
+  }
+
   return (
     <div>
-      <div class="flex justify-center">
-        <div class="mb-3 xl:w-96">
+      <div className="flex justify-center">
+        <div className="mb-3 xl:w-96">
+
           <div class="input-group relative flex flex-wrap items-stretch w-full mb-4">
             <input
               type="text"
@@ -86,6 +142,7 @@ const Getbooks = () => {
               aria-label="Search"
               aria-describedby="button-addon2"
             />
+            
             {/* <button
             class="btn inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700  focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out flex items-center"
             type="button"
@@ -110,6 +167,8 @@ const Getbooks = () => {
           </div>
         </div>
       </div>
+      <ShowGenre/>
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 content-center">
         {search(books)
           .slice(0)

@@ -28,6 +28,7 @@ const Mybooks = () => {
             console.log("error", error);
         }
         console.log("user", user);
+
         fetchUserBooks();
 
     }, [user, loading])
@@ -133,6 +134,9 @@ const Mybooks = () => {
     return (
         //tailwind
         <div className="flex flex-col items-center justify-center min-h-screen py-2">
+            
+            
+            
             <h1 className="text-2xl font-bold p-5">
                 My Books</h1>
             <div className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
