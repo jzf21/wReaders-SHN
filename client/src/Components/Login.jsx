@@ -9,9 +9,9 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth"
 import { useEffect } from "react";
-// import AddDoc from "./AddDoc"
 
 const Login = ({ firebaseapp, setUser, setCookie }) => {
+
   const auth = getAuth(firebaseapp);
   const navigate = useNavigate();
 
