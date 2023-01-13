@@ -171,7 +171,7 @@ const Mybooks = () => {
                                 <div class="w-1/2 p-4">
                                     <h2 class="text-xl font-bold">{book.title}</h2>
                                     <p class="text-gray-700">{book.planName}</p>
-                                    <p class="text-gray-600">Returned On {book.returnedDate}
+                                    <p class="text-gray-600">Returned On :<Zdate date={book.returnedDate} />
                                     </p>
                                     {/* <p class="text-gray-600">Issued On :{book.issueDate}</p> */}
                                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
