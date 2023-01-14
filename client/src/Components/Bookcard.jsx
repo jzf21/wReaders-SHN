@@ -6,7 +6,7 @@ const Bookcard = ({ book }) => {
   const navigate = useNavigate();
 
   return (
-      <div className=" justify-center outline-1 outline-double hover:scale-110 rounded-md shadow-md dark:bg-gray-900 dark:text-gray-100 ">
+      <div className=" hover:scale-110 rounded-md shadow-md dark:bg-gray-900 dark:text-gray-100 ">
         <img
           src={book.thumbnailUrl}
           alt=""
