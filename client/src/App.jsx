@@ -33,9 +33,11 @@ function App() {
     <>
       {" "}
       <Router>
+
         <div>
              <Sidebar />
              
+
           <Bottomnav />
         
           <div className=" content-center justify-center mx-auto col-span-3">
