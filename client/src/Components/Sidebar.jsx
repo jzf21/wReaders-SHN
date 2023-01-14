@@ -10,6 +10,7 @@ import { async } from "@firebase/util";
 import logo from "../assets/logo.jpeg";
 
 const Sidebar = () => {
+
   const [cookies, setCookie, removeCookie] = useCookies("firebaseAccessToken");
   const [user, loading, error] = useAuthState(auth);
   const [loggedIn, setLoggedIn] = useState(false);
@@ -57,6 +58,7 @@ const Sidebar = () => {
 
   const ScoreView = () => {
     return (
+      
       <li>
         <a
           href="#"
@@ -83,8 +85,8 @@ const Sidebar = () => {
 
   return (
     user && (
-      <div className="">
-        <aside class="w-64  left-0 top-0 fixed" aria-label="Sidebar">
+      <div className="hidden md:block  col-span-1">
+      <aside class="w-64  left-0 top-0 fixed" aria-label="Sidebar">
           <div class="overflow-y-auto h-[100vh] py-4 px-3 bg-gray-50 rounded dark:bg-gray-800">
             <ul class="space-y-2">
               <li>

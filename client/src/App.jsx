@@ -33,14 +33,15 @@ function App() {
     <>
       {" "}
       <Router>
-        <div className="grid grid-cols-1 md:grid-cols-4">
-          <div className="hidden md:block  col-span-1">
-            { cookies.firebaseAccessToken ? <Sidebar /> : null}
-          </div>
+        <div>
+             <Sidebar />
+             
           <Bottomnav />
+        
           <div className=" content-center justify-center mx-auto col-span-3">
+          
             {/* {JSON.stringify(cookies.firebaseAccessToken)} */}
-
+          
             <Routes>
               <Route
                 path="/"

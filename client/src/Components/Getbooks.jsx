@@ -96,12 +96,12 @@ const Getbooks = () => {
   const ShowGenre = ()=>
   {
     return(
-      <div class="flex flex-wrap -mx-4">
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-10">
         {
           genre.map((item) => (
-            <div className="w-1/4 px-4 mb-8">
-            <div className="bg-gray-100 rounded-lg shadow-md p-2 text-center">
-              <label for={item} className="text-2xl font-medium mb-2 text-indigo-600">{item}</label>
+            
+            <div className={`bg-gray-100 rounded-lg shadow-md p-2 text-center` }>
+              <label for={item} className=" text-lg md:text-xl font-medium mb-2 text-indigo-600">{item}</label>
               <input type="checkbox" 
               checked={selectedGenre.includes(item)} // when SELECTED THIS function is called and the value is added to the array
               onChange={(e) =>
@@ -112,12 +112,11 @@ const Getbooks = () => {
                  }
                 }
               when deselected
-              
               value = {item} 
               name = {item}
               className="text-2xl font-medium mb-2 text-indigo-600"/>
             </div>
-          </div>
+          
           ))
 
         }
@@ -128,11 +127,11 @@ const Getbooks = () => {
   }
 
   return (
-    <div>
+    <div className="md:ml-[300px] flex flex-col justify-center align-middle">
       <div className="flex justify-center">
         <div className="mb-3 xl:w-96">
 
-          <div class="input-group relative flex flex-wrap items-stretch w-full mb-4">
+          <div class="input-group relative flex flex-wrap items-stretch w-full mb-4 p-3">
             <input
               type="text"
               placeholder="Search for books"
@@ -169,7 +168,7 @@ const Getbooks = () => {
       </div>
       <ShowGenre/>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 content-center">
+      <div className="grid  sm:grid-cols-1 md:grid-cols-2 lg:cols-3 gap-[2rem]  p-4 sm:p-3 justify-center">
         {search(books)
           .slice(0)
           .map((book) => {

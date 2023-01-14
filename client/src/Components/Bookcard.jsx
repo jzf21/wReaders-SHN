@@ -6,12 +6,11 @@ const Bookcard = ({ book }) => {
   const navigate = useNavigate();
 
   return (
-    <>
-      <div className="max-w-xs hover:scale-110 rounded-md shadow-md dark:bg-gray-900 dark:text-gray-100 hover:scale-110 ">
+      <div className=" justify-center outline-1 outline-double hover:scale-110 rounded-md shadow-md dark:bg-gray-900 dark:text-gray-100 ">
         <img
           src={book.thumbnailUrl}
           alt=""
-          className="object-cover object-center w-full rounded-t-md h-72 dark:bg-gray-500"
+          className=" m-2 object-cover object-center w-full rounded-t-md h-72 dark:bg-gray-500"
         />
         <div className="flex flex-col justify-between p-6 space-y-8">
           <div className="space-y-2">
@@ -41,7 +40,6 @@ const Bookcard = ({ book }) => {
           </button>
         </div>
       </div>
-    </>
   );
 };
 
