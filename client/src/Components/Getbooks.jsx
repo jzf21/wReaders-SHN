@@ -24,6 +24,9 @@ const Getbooks = () => {
   const [genre, setGenre] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState([]);
   const [user, loading, error] = useAuthState(auth);
+  const [toggleG, setToggleG] = useState(false);
+  const [searchG, setSearchG] = useState("")
+
   const navigate = useNavigate();
   useEffect(() => {
     if (loading) {
@@ -93,41 +96,21 @@ const Getbooks = () => {
     });
   }
 
+  function searchGen(genreList){
+   let newList=[];
+    return genreList.filter((genre) => {
+      return genre.toString().toLowerCase().indexOf(searchG.toLowerCase()) > -1;
+    });
+
+  }
+
   const ShowGenre = ()=>
   {
-    return(
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-10">
-        {
-          genre.map((item) => (
-            
-            <div className={`bg-gray-100 rounded-lg shadow-md p-2 text-center` }>
-              <label for={item} className=" text-lg md:text-xl font-medium mb-2 text-indigo-600">{item}</label>
-              <input type="checkbox" 
-              checked={selectedGenre.includes(item)} // when SELECTED THIS function is called and the value is added to the array
-              onChange={(e) =>
-                 {
-                e.preventDefault();
-                 e.target.checked ? setSelectedGenre((prevState)=>[...prevState, e.target.value])
-                  : setSelectedGenre((prevState)=>prevState.filter((item)=>item!==e.target.value))// when DESELECTED THIS function is called and the value is removed from the array 
-                 }
-                }
-              when deselected
-              value = {item} 
-              name = {item}
-              className="text-2xl font-medium mb-2 text-indigo-600"/>
-            </div>
-          
-          ))
-
-        }
-     
-            </div>
-        
-      )
+    
   }
 
   return (
-    <div className="md:ml-[300px] flex flex-col justify-center align-middle">
+    <div className="md:ml-[300px] flex flex-col bg-[#f2ffed] justify-center align-middle">
       <div className="flex justify-center">
         <div className="mb-3 xl:w-96">
 
@@ -166,9 +149,57 @@ const Getbooks = () => {
           </div>
         </div>
       </div>
-      <ShowGenre/>
+      <div class="grid grid-cols-1  gap-2 md:grid-cols-1 justify-center self-center">
+        
+        <input type="text" key="gsearchbox" value={searchG} className="w-[80] border-2" 
+                    onFocus={()=>{setToggleG(true)}}
+                    placeholder="Search Genre"
+                    onChange={(e)=>{setSearchG(e.target.value)}}
 
-      <div className="grid  sm:grid-cols-1 md:grid-cols-2 lg:cols-3 gap-[2rem]  p-4 sm:p-3 justify-center">
+        />
+          
+          <div className={`${toggleG ? "" :"hidden "}`}>
+          {searchGen(genre).map((item) => (
+            
+            <div className={`bg-gray-100  shadow-md  text-start px-2 
+                              text-lg md:text-xl font-medium  text-stone-600 cursor-pointer border-slate-400 border-b-[2px]
+                              w-80 ${selectedGenre.includes(item) ? "bg-stone-300 text-white" : "text-gray-600"}`}
+                    onClick={() => { 
+                      setToggleG(false);
+                      if(selectedGenre.includes(item))
+                      {
+                        setSelectedGenre(selectedGenre.filter((genre) => genre !== item));
+                        
+                      }
+                      else
+                      {
+                        setSelectedGenre([...selectedGenre,item]);
+                      }
+                    }}
+              >{item}
+
+            </div>
+                       
+          
+          ))
+                  }
+          </div>
+
+        
+     
+            </div>
+
+            <div className="grid sm:flex md:flex gap-4 p-4">
+            {selectedGenre.map((item) => (
+              <div className="flex bg-gray-100  w-max  h-6 shadow-md  justify-between px-2" key={item.id}>
+                {item}
+                <button className=" bg-orange-300 text-white ml-3 mt-1 mb-0.5 text-[10px] px-1 rounded-xl" onClick={() => {setSelectedGenre(selectedGenre.filter((genre) => genre !== item))}}>X</button>
+              </div>
+            ))
+
+            }
+          </div>
+      <div className="grid  sm:grid-cols-1 md:grid-cols-3 lg:cols-3 gap-[2rem]  p-4 sm:p-3 justify-center">
         {search(books)
           .slice(0)
           .map((book) => {
