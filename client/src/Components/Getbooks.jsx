@@ -110,7 +110,7 @@ const Getbooks = () => {
   }
 
   return (
-    <div className="md:ml-[300px] flex flex-col justify-center align-middle">
+    <div className="md:ml-[300px] flex flex-col bg-[#f2ffed] justify-center align-middle">
       <div className="flex justify-center">
         <div className="mb-3 xl:w-96">
 
@@ -150,13 +150,14 @@ const Getbooks = () => {
         </div>
       </div>
       <div class="grid grid-cols-1  gap-2 md:grid-cols-1 justify-center self-center">
+        
         <input type="text" key="gsearchbox" value={searchG} className="w-[80] border-2" 
                     onFocus={()=>{setToggleG(true)}}
                     placeholder="Search Genre"
                     onChange={(e)=>{setSearchG(e.target.value)}}
 
         />
-        
+          
           <div className={`${toggleG ? "" :"hidden "}`}>
           {searchGen(genre).map((item) => (
             
@@ -178,6 +179,7 @@ const Getbooks = () => {
               >{item}
 
             </div>
+                       
           
           ))
                   }
@@ -187,7 +189,17 @@ const Getbooks = () => {
      
             </div>
 
-      <div className="grid  sm:grid-cols-1 md:grid-cols-2 lg:cols-3 gap-[2rem]  p-4 sm:p-3 justify-center">
+            <div className="grid sm:flex md:flex gap-4 p-4">
+            {selectedGenre.map((item) => (
+              <div className="flex bg-gray-100  w-max  h-6 shadow-md  justify-between px-2" key={item.id}>
+                {item}
+                <button className=" bg-orange-300 text-white ml-3 mt-1 mb-0.5 text-[10px] px-1 rounded-xl" onClick={() => {setSelectedGenre(selectedGenre.filter((genre) => genre !== item))}}>X</button>
+              </div>
+            ))
+
+            }
+          </div>
+      <div className="grid  sm:grid-cols-1 md:grid-cols-3 lg:cols-3 gap-[2rem]  p-4 sm:p-3 justify-center">
         {search(books)
           .slice(0)
           .map((book) => {
