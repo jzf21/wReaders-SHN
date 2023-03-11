@@ -17,7 +17,7 @@ import {
   orderBy,
 } from "firebase/firestore";
 import { db } from "./firebase-config";
-import Bookcard from "./bookcard";
+import Bookcard from "./Bookcard";
 
 const Getbooks = () => {
   const [books, setBooks] = useState([]);

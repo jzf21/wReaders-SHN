@@ -1,5 +1,5 @@
 import "./App.scss";
-import Bookcard from "./Components/bookcard";
+import Bookcard from "./Components/Bookcard";
 import Sidebar from "./Components/Sidebar";
 import ViewBook from "./Components/ViewBook";
 import DonateBook from "./Components/DonateBook";
